@@ -1,3 +1,15 @@
+TETRANACCI SEQUENCE: 0, 0, 0, 1, 1, 2, 4, 8, 15, 29, 56, 108, 208, 401, 773, 1490, …
+T(0) = 0
+T(1) = 0
+T(2) = 0
+T(3) = 1
+T(4) = T(3) + T(2) + T(1) + T(0) = 1
+T(5) = T(4) + T(3) + T(2) + T(1) = 2
+T(6) = T(5) + T(4) + T(3) + T(2) = 4
+T(7) = T(6) + T(5) + T(4) + T(3) = 8
+......so on....
+
+
 LINEAR RECURSION PSEUDOCODE
  Algorithm LinearTetranacci(k):
 	    Input: A nonnegative integer k
@@ -15,7 +27,7 @@ Time complexity: O(n)
 Space Complexity: O(n) --> because of the stack depth
 
 MULTIPLE RECURSION PSEUDOCODE
-	Algorithm MultipleTetranacci(k):
+Algorithm MultipleTetranacci(k):
     Input: A nonnegative integer k
     Output: The k-th Tetranacci number Tk
 
@@ -30,5 +42,32 @@ Time complexity: O(2^n) -> exponential
 Space Complexity: O(n) --> because of the stack depth
 
 
-----------
+---------------
 TAIL RECURSION???
+
+Algorithm TailTetranacci(k, a, b, c, d)
+   if (k == 0) then
+       return d
+   else TailTetranacci(k-1, b, c, d, a + b + c + d)   // shift the values 
+
+
+StartTetranacci(k)
+  if (k < 3) then
+    return 0
+  else if (k == 3) 
+    return 1
+  else 
+    TailTetranacci(k, 0, 0, 0, 1)
+
+Time Complexity: O(n)
+Space Complexity: O(1) because it is a Linear Tail Recursion 
+
+
+
+  
+
+
+
+
+
+       
