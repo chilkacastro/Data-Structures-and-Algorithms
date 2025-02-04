@@ -88,7 +88,7 @@ public class LinearRecursion {
         if (k <= 2)
             return elements;
         else if (k == 3) {
-            elements[3] = BigInteger.ONE;     //{ 0, 0, 0, 1}
+            elements[3] = BigInteger.ONE;     // {0, 0, 0, 1}
             return elements;
         }
         else {
