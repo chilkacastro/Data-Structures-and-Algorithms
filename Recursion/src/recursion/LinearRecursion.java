@@ -6,19 +6,19 @@ import java.math.BigInteger;
 import java.util.Scanner;
 
 /**
- * Multiple Recursion Tetranacci Calculator
- * This class computes the Tetranacci sequence using multiple recursion.
+ * Linear Recursion Tetranacci Calculator
+ * This class computes the Tetranacci sequence using linear recursion.
  * It measures execution time and writes the output to a shared file.
  *
  * @author Chilka Castro and Christian David
  */
-public class MultipleRecursion {
-    private static final String OUTPUT_FILE = "MultipleRecursion_TetraOut.txt";     
-    private static final String CALCULATOR_TYPE = "Multiple Recursion";
+public class LinearRecursion {
+    private static final String OUTPUT_FILE = "LinearRecursion_TetraOut.txt";  
+    private static final String CALCULATOR_TYPE = "Linear Recursion";
     
     public static void main(String[] args) {
-        int n = getUserInput();               // comment this if user input isnt needed
-//        int n = 7
+        int n = getUserInput();                 // comment this if user input isnt needed
+//        int n = 7;  
         long executionTime = measureExecutionTime(n);
         String output = generateOutput(n, executionTime);
         
@@ -45,7 +45,7 @@ public class MultipleRecursion {
      */
     public static long measureExecutionTime(int n) {
         long start = System.currentTimeMillis();
-        BigInteger result = multipleTetranacci(n);
+        BigInteger result = linearTetranacci(n)[3];
         long end = System.currentTimeMillis();
         return end - start;
     }
@@ -58,7 +58,7 @@ public class MultipleRecursion {
      */
     public static String generateOutput(int n, long executionTime) {
         return String.format("[%s] Tetranacci of %d: %s\nExecution Time in milliseconds: %d ms\n", 
-            CALCULATOR_TYPE, n, multipleTetranacci(n).toString(), executionTime);
+            CALCULATOR_TYPE, n, linearTetranacci(n)[3].toString(), executionTime);
     }
     
     /**
@@ -74,17 +74,32 @@ public class MultipleRecursion {
     }
     
     /**
-     * Computes the Tetranacci number using multiple recursion.
+     * Computes the Tetranacci sequence using linear recursion.
+     * The function maintains an array of the last four computed values, 
+     * shifting values forward at each step and computing the next value 
+     * recursively.
+     * 
      * @param k the index of the Tetranacci sequence
-     * @return the computed Tetranacci value
+     * @return an array containing the computed Tetranacci values
      */
-    public static BigInteger multipleTetranacci(int k) { 
-        if (k <= 2) 
-            return BigInteger.ZERO;
-        else if (k == 3) 
-            return BigInteger.ONE;
-        else 
-            return multipleTetranacci(k - 1).add(multipleTetranacci(k - 2))
-                    .add(multipleTetranacci(k - 3)).add(multipleTetranacci(k - 4));
+    public static BigInteger[] linearTetranacci(int k) {
+        BigInteger[] elements = {BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO, BigInteger.ZERO};   // {0,0,0,0}
+        
+        if (k <= 2)
+            return elements;
+        else if (k == 3) {
+            elements[3] = BigInteger.ONE;     //{ 0, 0, 0, 1}
+            return elements;
+        }
+        else {
+            elements = linearTetranacci(k - 1);
+            BigInteger total = elements[0].add(elements[1]).add(elements[2]).add(elements[3]);
+            elements[0] = elements[1];
+            elements[1] = elements[2];
+            elements[2] = elements[3];
+            elements[3] = total;
+            
+            return elements;
+        }
     }
 }

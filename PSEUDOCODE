@@ -19,10 +19,10 @@ Algorithm LinearTetranacci(k):
 	     if k <= 2 then   				          // or do if k == 0 or k == 1 or k == 2 then 
 	        return (0, 0, 0, 0)  			          // return for T(0), T(1), and T(2) which are all 0
 	    else if k == 3 then
-	        return (1, 0, 0, 0)  			         // return for T(3)
+	        return (1, 0, 0, 0)  			          // return for T(3)
 	    else
-	        (a, b, c, d) = LinearTetranacci(k - 1)          // Recursively get the last four values
-	        return (a + b + c + d, a, b, c)  		// Compute the current value and shift the others -> just add the four elements when returned for final value
+	        (a, b, c, d) = LinearTetranacci(k - 1)           // recursively get the last four values
+	        return (b, c, d, a + b + c + d)  		 //  last element is the answer to the sequence asked
 
 Time complexity: O(n)
 Space Complexity: O(n) --> because of the stack depth
