@@ -1,54 +1,20 @@
-[Multiple Recursion] Tetranacci of 7: 8
+[Multiple Recursion] Tetranacci of 5: 2
+Execution Time in milliseconds: 1 ms
+
+[Multiple Recursion] Tetranacci of 10: 56
+Execution Time in milliseconds: 1 ms
+
+[Multiple Recursion] Tetranacci of 15: 1490
 Execution Time in milliseconds: 1 ms
 
 [Multiple Recursion] Tetranacci of 20: 39648
-Execution Time in milliseconds: 6 ms
+Execution Time in milliseconds: 3 ms
 
-[Multiple Recursion] Tetranacci of 10: 56
-Execution Time in milliseconds: 1 ms
+[Multiple Recursion] Tetranacci of 25: 1055026
+Execution Time in milliseconds: 46 ms
 
 [Multiple Recursion] Tetranacci of 30: 28074040
-Execution Time in milliseconds: 637 ms
+Execution Time in milliseconds: 575 ms
 
-[Multiple Recursion] Tetranacci of 35: 747044834
-Execution Time in milliseconds: 15163 ms
-
-[Multiple Recursion] Tetranacci of 0: 0
-Execution Time in milliseconds: 0 ms
-
-[Multiple Recursion] Tetranacci of 2: 0
-Execution Time in milliseconds: 0 ms
-
-[Multiple Recursion] Tetranacci of 2: 0
-Execution Time in milliseconds: 1 ms
-
-[Multiple Recursion] Tetranacci of 4: 1
-Execution Time in milliseconds: 1 ms
-
-[Multiple Recursion] Tetranacci of 5: 2
-Execution Time in milliseconds: 0 ms
-
-[Multiple Recursion] Tetranacci of 6: 4
-Execution Time in milliseconds: 1 ms
-
-[Multiple Recursion] Tetranacci of 6: 4
-Execution Time in milliseconds: 0 ms
-
-[Multiple Recursion] Tetranacci of 8: 15
-Execution Time in milliseconds: 1 ms
-
-[Multiple Recursion] Tetranacci of 9: 29
-Execution Time in milliseconds: 1 ms
-
-[Multiple Recursion] Tetranacci of 10: 56
-Execution Time in milliseconds: 1 ms
-
-[Multiple Recursion] Tetranacci of 11: 108
-Execution Time in milliseconds: 1 ms
-
-[Multiple Recursion] Tetranacci of 12: 208
-Execution Time in milliseconds: 0 ms
-
-[Multiple Recursion] Tetranacci of 8: 15
-Execution Time in milliseconds: 0 ms
+//It stops running at 35 for our computers
 

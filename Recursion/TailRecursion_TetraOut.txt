@@ -67,3 +67,6 @@ Execution Time in milliseconds: 1 ms
 [Tail Recursion] Tetranacci of 7: 8
 Execution Time in milliseconds: 0 ms
 
+[Tail Recursion] Tetranacci of 10: 56
+Execution Time in milliseconds: 1 ms
+
