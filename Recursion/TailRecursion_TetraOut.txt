@@ -1,72 +1,120 @@
+[Tail Recursion] Tetranacci of 5: 2
+Execution Time in milliseconds: 1 ms
+
 [Tail Recursion] Tetranacci of 10: 56
 Execution Time in milliseconds: 0 ms
-
-[Tail Recursion] Tetranacci of 7: 8
-Execution Time in milliseconds: 1 ms
 
 [Tail Recursion] Tetranacci of 15: 1490
 Execution Time in milliseconds: 1 ms
 
+[Tail Recursion] Tetranacci of 20: 39648
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 25: 1055026
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 30: 28074040
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 35: 747044834
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 40: 19878720128
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 45: 528968939938
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 50: 14075762303480
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 55: 374553342295090
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 60: 9966792788887776
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 65: 265214449530564434
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 70: 7057305768232953720
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 75: 187793556476621449410
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 80: 4997150614173857218560
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 85: 132973221921205159159874
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 90: 3538391998422743815303864
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 95: 94155934206972141509219218
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 100: 2505471397838180985096739296
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 105: 66670114616316717544713712242
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 110: 1774078996386885807516974966200
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 115: 47207902724241334534208858172066
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 120: 1256193260931560609295955290945664
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 125: 33427062371901374825804825858849762
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 130: 889487735339682550112673527109223032
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 135: 23669098484250481905132698859185241074
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 140: 629830182923439790144817071683007880672
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 145: 16759660685231852250922868891493682942610
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 150: 445971364821444037740292573192446103268088
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 155: 11867212706517279506485146840396454844577154
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 160: 315784260000886686325754181051807608716831744
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 165: 8402958751176944212652063735101387274453410946
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 170: 223601124938218661631242375183080562050428723512
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 175: 5949983161185228147212195784754868051809546954066
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 180: 158327913726594492965579206543147518471110517679328
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 185: 4213075497178800956374454608992746953837403236679602
+Execution Time in milliseconds: 1 ms
+
+[Tail Recursion] Tetranacci of 190: 112109133046366386340729991555585493384183160146986808
+Execution Time in milliseconds: 0 ms
+
+[Tail Recursion] Tetranacci of 195: 2983202584625907612346911741624150419229039088261560674
+Execution Time in milliseconds: 1 ms
+
 [Tail Recursion] Tetranacci of 200: 79382450109912259502702597453977778423343442387090123392
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 5000: 87057640528892080059147867841743403117981796601985336513725494049211591789591721101199363934211251941485966347906660112233633311733867804595769035389214490073184604789876066295571134550420115995194603703795073848087474175360977400544701170426305906915108807383075069181102316983803208067076125682634212009467677878642584493761888986866466101252848655293933548715383796146542939863326527007047810013764878577898024721170718160576989789446837415701519248709917153189169025782905959788673258360814860763019589858489659684565798161121202703548111755024375403323592547359255049202605804173068494860048726999031526626291872554828943552467061944388421604040010225579649321237187395504328880035170423160861503465750967010050003475795971225063929522386625915968157318326556380506322229448377744966550288483266332483691506213641847159686145024456311083963758136303109343458706201552060886832429052050723568760904521915902113077441869379099693527472785560538171453920783662732725533637217578452201696593669794915328367317374169038338173988909228821037036651906248997640842432441865400475476481060510205472878312627523401698519121477867035015032810041497731730098774469665491456000367528609045087656364659878770920408758780849646034538996338554249054468650566331198793909894113522270105421564273740804865213820816607345471647084184968326499533972553911221191718187484680869179759347680308007440400013952507285360956081703756115240315520
-Execution Time in milliseconds: 15 ms
-
-[Tail Recursion] Tetranacci of 300: 2515124854703970532873046042225404426852645102120537507678881517218101308139510066144
-Execution Time in milliseconds: 2 ms
-
-[Tail Recursion] Tetranacci of 10: 56
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 8: 15
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 1: 0
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 0: 0
-Execution Time in milliseconds: 0 ms
-
-[Tail Recursion] Tetranacci of 1: 0
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 2: 0
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 1: 0
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 2: 0
-Execution Time in milliseconds: 0 ms
-
-[Tail Recursion] Tetranacci of 1: 0
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 3: 1
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 4: 1
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 3: 1
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 5: 2
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 4: 1
-Execution Time in milliseconds: 2 ms
-
-[Tail Recursion] Tetranacci of 8: 15
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 7: 8
-Execution Time in milliseconds: 1 ms
-
-[Tail Recursion] Tetranacci of 7: 8
-Execution Time in milliseconds: 0 ms
-
-[Tail Recursion] Tetranacci of 10: 56
 Execution Time in milliseconds: 1 ms
 
