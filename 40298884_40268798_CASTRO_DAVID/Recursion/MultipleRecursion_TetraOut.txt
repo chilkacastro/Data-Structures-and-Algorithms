@@ -1,0 +1,26 @@
+[Multiple Recursion] Tetranacci of 5: 2
+Execution Time in milliseconds: 1 ms
+
+[Multiple Recursion] Tetranacci of 10: 56
+Execution Time in milliseconds: 1 ms
+
+[Multiple Recursion] Tetranacci of 15: 1490
+Execution Time in milliseconds: 1 ms
+
+[Multiple Recursion] Tetranacci of 20: 39648
+Execution Time in milliseconds: 3 ms
+
+[Multiple Recursion] Tetranacci of 25: 1055026
+Execution Time in milliseconds: 46 ms
+
+[Multiple Recursion] Tetranacci of 30: 28074040
+Execution Time in milliseconds: 575 ms
+
+[Multiple Recursion] Tetranacci of 35: 747044834
+Execution Time in milliseconds: 15656 ms
+
+[Multiple Recursion] Tetranacci of 40: 19878720128
+Execution Time in milliseconds: 419515 ms
+
+Enter a number: 45
+BUILD STOPPED (total time: 80 minutes 1 second). 
