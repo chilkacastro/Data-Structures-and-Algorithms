@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class LinearRecursion {
     private static final String OUTPUT_FILE = "LinearRecursion_TetraOut.txt";  
     private static final String CALCULATOR_TYPE = "Linear Recursion";
+    private static BigInteger result;
     
     public static void main(String[] args) {
         int n = getUserInput();                 // comment this if user input isnt needed
@@ -45,7 +46,7 @@ public class LinearRecursion {
      */
     public static long measureExecutionTime(int n) {
         long start = System.currentTimeMillis();
-        BigInteger result = linearTetranacci(n)[3];
+        result = linearTetranacci(n)[3];
         long end = System.currentTimeMillis();
         return end - start;
     }
@@ -58,7 +59,7 @@ public class LinearRecursion {
      */
     public static String generateOutput(int n, long executionTime) {
         return String.format("[%s] Tetranacci of %d: %s\nExecution Time in milliseconds: %d ms\n", 
-            CALCULATOR_TYPE, n, linearTetranacci(n)[3].toString(), executionTime);
+            CALCULATOR_TYPE, n, result.toString(), executionTime);
     }
     
     /**
