@@ -17,6 +17,9 @@ public class MyArrayList {
     }
     
     public static Boolean add(int n) {
+        if (myList[myList.length - 1] != 0) {
+            doubleSize();
+        }
         for (int i = 0; i < myList.length; i++) {
             if (myList[i] != 0) {
                 myList[i] = n;
@@ -27,6 +30,9 @@ public class MyArrayList {
     }
     
     public static void add(int index, int n) {
+        if (myList.length - 1 != index) {
+            doubleSize();
+        }
         for (int i = 0; i < myList.length; i++) {
             if (i == index) {
                 myList[i] = n;
@@ -35,12 +41,18 @@ public class MyArrayList {
     }
     
     public static void clear() {
-        int[] temp = new int[myList.length];
+        int[] temp = new int[5];
         myList = temp;
     }
     
     public static int size() {
         return myList.length;
+    }
+    
+    public int remove(int index){
+        int temp = myList[index];
+        myList[index] = 0;
+        return temp;
     }
     
     public String toString() {
@@ -60,11 +72,27 @@ public class MyArrayList {
     }
     
     public static void halfSize() {
-        int[] temp = new int[myList.length / 2];
-        for (int i = 0; i < temp.length; i++) {
-            temp[i] = myList[i];
+        if(isOverSized()) {
+            int[] temp = new int[myList.length / 2];
+            for (int i = 0; i < temp.length; i++) {
+                temp[i] = myList[i];
+            }
+            myList = temp;
         }
-        myList = temp;
+
+    }
+    
+    public static Boolean isOverSized() {
+        int counter = 0;
+        for (int i = 0; i < myList.length; i++) {
+            if (myList[i] == 0) {
+               counter++; 
+            }
+        }
+        if((counter/myList.length * 100) <= (myList.length/myList.length * 100)) {
+            return true;
+        }
+        return false;
     }
 
 }
