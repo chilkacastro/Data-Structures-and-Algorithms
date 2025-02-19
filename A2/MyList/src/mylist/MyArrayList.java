@@ -26,7 +26,7 @@ package mylist;
 
 /**
  *
- * @author Chilka Castro
+ * @author Chilka Castro and Christian David
  */
 public class MyArrayList {
  
