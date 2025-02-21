@@ -8,6 +8,9 @@ public class MyLinkedList<E> implements List<E> {
   /**
    * @param args the command line arguments
    */
+
+  int size = 0;
+
   public static void main(String[] args) {
 
   }
@@ -35,11 +38,15 @@ public class MyLinkedList<E> implements List<E> {
     if (head == null) {
       head = newNode;
       tail = newNode;
+
+      this.size++;
       return true;
     }
     newNode.next = head;
     head.prev = newNode;
     head = newNode;
+
+    this.size++;
     return true;
   }
 
@@ -57,6 +64,7 @@ public class MyLinkedList<E> implements List<E> {
       newNode.next = head;
       head.prev = newNode;
       head = newNode;
+      this.size++;
       return;
     }
 
@@ -71,6 +79,8 @@ public class MyLinkedList<E> implements List<E> {
       newNode.next = temp;
       temp.prev = newNode;
       temp = newNode;
+      this.size++;
+
       return;
     }
 
@@ -84,18 +94,13 @@ public class MyLinkedList<E> implements List<E> {
   }
 
   public int size() {
-    int counter = 0;
-    Node temp = head;
-    while (temp != null) {
-      counter++;
-      temp = temp.next;
-    }
-    return counter;
+    return this.size;
   }
 
   public void clear() {
     head = null;
     tail = null;
+    this.size = 0;
   }
 
   public Boolean remove(Object o) {
@@ -109,6 +114,8 @@ public class MyLinkedList<E> implements List<E> {
       if (head != null) {
         head.prev = null;
       }
+
+      this.size--;
       return true;
     }
 
@@ -117,6 +124,8 @@ public class MyLinkedList<E> implements List<E> {
       if (tail != null) {
         tail.next = null;
       }
+
+      this.size--;
       return true;
     }
 
@@ -127,6 +136,7 @@ public class MyLinkedList<E> implements List<E> {
       temp1.prev = temp2;
       temp2.next = temp1;
 
+      this.size--;
       return true;
     }
 
@@ -147,6 +157,8 @@ public class MyLinkedList<E> implements List<E> {
       if (head != null) {
         head.prev = null;
       }
+
+      this.size--;
       return removed;
     }
 
@@ -165,6 +177,7 @@ public class MyLinkedList<E> implements List<E> {
       temp1.prev = temp2;
       temp2.next = temp1;
 
+      this.size--;
       return removed;
     }
 
@@ -175,6 +188,8 @@ public class MyLinkedList<E> implements List<E> {
       if (tail != null) {
         tail.next = null;
       }
+
+      this.size--;
       return removed;
     }
 
