@@ -5,121 +5,205 @@ package mylist;
  * @author Chilka Castro and Christian David
  */
 public class MyArrayList<E> implements List<E> {
+    private Object[] elements;
+    private int size = 0;
+    private static final int DEFAULT_CAPACITY = 10;
 
-    // public static int[] myList = new int[5];
-    private Object[] myList = new Object[5];
-    private int size = myList.length;
+    // Constructor
+    public MyArrayList() {
+        elements = new Object[DEFAULT_CAPACITY];
+    }
 
     /**
-     * @param args the command line arguments
+     * Appends the specified element to the end of this list
+     * @param e element to be appended to this list
+     * @return True or False if the element was added
      */
-    public static void main(String[] args) {
-
-    }
-
-    public void add(int index, E e) {
-        if (index >= myList.length) {
-            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
-        } else {
-            myList[index] = e;
-        }
-    }
-
     public Boolean add(E e) {
-        for (int i = 0; i < myList.length; i++) {
-            if (myList[i] == null) {
-                myList[i] = e;
-                return true;
-            }
+//        for (int i = 0; i < size(); i++) {
+//            if (elements[i] == null) {
+//                elements[i] = e;
+//                return true;
+//            }
+//        }
+//        return false;
+        if (size == elements.length) {  // if the size is equal to the length of the array, double the size
+            elements = doubleSize(elements);
         }
-        return false;
+        elements[size] = e; // add the element to the end of the array and increment the size
+        size++;
+        return true;
     }
 
+    /**
+     * Inserts the specified element at the specified position in this list
+     * @param index
+     * @param e
+     */
+    public void add(int index, E e) {
+        if (index >= size || index < 0) { // if the index is out of bounds, throw an exception
+            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
+        }
+        if (size == elements.length) {  // if the size is equal to the length of the array, double the size
+            elements = doubleSize(elements);
+        }
+        if (index < size) {           // if the index is less than the size, shift the elements to the right
+            System.arraycopy(elements, index, elements, index + 1, size - index);
+        }
+        elements[index] = e;           // insert the element at the specified index
+        size++;                        // increment the size
+    }
+
+    /**
+     * Removes all elements from this list
+     */
     public void clear() {
-        myList = new Object[5];
+        for (int i = 0; i < size; i++)
+            elements[i] = null;    // set all elements to null
+        size = 0;     // set the size to 0
     }
 
+    /**
+     *  Removes the element at the specified position in this list
+     * @param index
+     * @return
+     */
     public E remove(int index) {
-        if (index >= myList.length || index < 0) {
+        if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds: " + index);
         }
 
-        if (myList[index] == null) {
-            return null;
+        E removedElement = (E) elements[index];  // store the element to return
+        for (int i = index; i < size - 1; i++) {
+            elements[i] = elements[i + 1];
         }
 
-        E temp = (E) myList[index];
-        for (int i = index; i < myList.length - 1; i++) {
-            myList[i] = myList[i + 1];
+// OPTION 2: INSTEAD OF FOR LOOP
+//        int elementsToShift = size - index - 1;  // calculate the number of elements to shift to the left
+//        if (elementsToShift > 0) {                  // if there are elements to shift to the left (i.e., not the last element)
+//            System.arraycopy(elements, index + 1, elements, index, elementsToShift);
+//        }
+
+        size--;
+        elements[size] = null;   // set the last element to null
+
+        if (size > DEFAULT_CAPACITY && size < elements.length / 4) { // if the size is less than 1/4 of the length of the array, half the size
+            elements = (Object[]) halfSize(elements);
+
         }
-        myList[myList.length - 1] = null;
-        return temp;
+
+        return removedElement;
     }
 
+    /**
+     * Removes the first occurrence of the specified element from this list
+     * @param o object to remove
+     * @return True or False
+     */
     public Boolean remove(Object o) {
-        int index = 0;
-        // finds the object
-        for (int i = 0; i < myList.length; i++) {
-            if (o.equals((E) myList[i])) {
-                index = i;
+        for (int i = 0; i < size ; i++) {
+            if (o.equals((E) elements[i])) {
                 // deletes the object and moves the values
-                for (int j = index; j < myList.length - 1; j++) {
-                    myList[j] = myList[j + 1];
+                for (int j = i; j < size - 1; j++) {
+                    elements[j] = elements[j + 1];
                 }
-                myList[myList.length - 1] = null;
+                size--;
+                elements[size] = null;
+                if (size > DEFAULT_CAPACITY && size < elements.length / 4) {
+                    elements = (Object[]) halfSize(elements);
+                }
                 return true;
             }
         }
         return false;
-    }
 
+    }
+    /* OPTION 2: Using System.arraycopy
+    public Boolean remove(Object o) {
+    for (int i = 0; i < size; i++) {
+        if (o.equals((E) elements[i])) {
+            int elementsToShift = size - i - 1;
+            if (elementsToShift > 0) {
+                System.arraycopy(elements, i + 1, elements, i, elementsToShift);
+            }
+            size--;
+            elements[size] = null;
+            return true;
+        }
+    }
+    return false;
+}
+     */
+
+    /**
+     * Returns the number of elements in this list
+     * @return the number of elements in this list
+     */
     public int size() {
-        return myList.length;
+        return size;
     }
 
+    /**
+     * Returns a string representation of the object
+     * @return String representation of the object
+     */
     public String toString() {
-        String temp = "";
-        for (int i = 0; i < myList.length; i++) {
-            if (myList[i] != null) {
-                temp += myList[i] + " ";
+        String result = "";
+        for (int i = 0; i < size; i++) {
+            if (elements[i] != null) {    // if the element is not null, add it to the result string
+                result += elements[i];
+                if (i < size - 1 && elements[i + 1] != null) {   // if the next element is not null, add a comma
+                    result += ", ";
+                }
+            }
+            else {
+                result += "," + elements[i];
             }
         }
-        return temp;
+        return String.format("[%s]", result);
     }
 
     public static Object[] doubleSize(Object[] myList) {
         Object[] temp = new Object[myList.length * 2];
-        for (int i = 0; i < myList.length; i++) {
+        for (int i = 0; i < myList.length; i++) {         // for loop can be replace with this:   System.arraycopy(myList, 0, temp, 0, myList.length);
             temp[i] = myList[i];
         }
         return temp;
     }
 
     public static Object halfSize(Object[] myList) {
+        System.out.println("entering halfSize");
         Object[] temp = new Object[myList.length / 2];
-        for (int i = 0; i < myList.length; i++) {
+        System.out.println(temp.length);
+        for (int i = 0; i < myList.length; i++) {          // for loop can be replace with this:   System.arraycopy(myList, 0, temp, 0, temp.length);
             temp[i] = myList[i];
         }
+        System.out.println("Shrinking array from " + myList.length + " to " + temp.length);
         return temp;
-
     }
 
-    public static Boolean isOverSized(Object[] myList) {
-        int counter = 0;
-        for (int i = 0; i < myList.length; i++) {
-            if (myList[i] == null) {
-                counter++;
-            }
-        }
-        if ((counter / myList.length * 100) <= (myList.length / myList.length * 100)) {
-            halfSize(myList);
-            return true;
-        }
-        return false;
-    }
+
+
+//--------------------------------------------------------------------------------
+
+
+
+//    public static Boolean isOverSized(Object[] myList) {
+//        int counter = 0;
+//        for (int i = 0; i < myList.length; i++) {
+//            if (myList[i] == null) {
+//                counter++;
+//            }
+//        }
+//        if ((counter / myList.length * 100) <= (myList.length / myList.length * 100)) {
+//            halfSize(myList);
+//            return true;
+//        }
+//        return false;
+//    }
 
     // public static Boolean add(int n) {
-    //// if (myList[myList.length - 1] != 0) {
+    //// if (myList[elements.length - 1] != 0) {
     //// doubleSize();
     //// }
     //// for (int i = 0; i < myList.length; i++) {

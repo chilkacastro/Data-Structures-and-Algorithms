@@ -7,7 +7,7 @@ package mylist;
 
 /**
  *
- * @author Dennis Christian
+ * @author Chilka Castro and Christian David
  */
 public interface List<E> {
     void add(int index, E e);
