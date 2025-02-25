@@ -1,7 +1,7 @@
 package mylist;
 
 /**
- *
+ * MyArrayList class
  * @author Chilka Castro and Christian David
  */
 public class MyArrayList<E> implements List<E> {
@@ -11,7 +11,7 @@ public class MyArrayList<E> implements List<E> {
 
     // Constructor
     public MyArrayList() {
-        elements = new Object[DEFAULT_CAPACITY];
+        this.elements = new Object[DEFAULT_CAPACITY];
     }
 
     /**
@@ -41,7 +41,7 @@ public class MyArrayList<E> implements List<E> {
      * @param e
      */
     public void add(int index, E e) {
-        if (index >= size || index < 0) { // if the index is out of bounds, throw an exception
+        if (index > size || index < 0) { // if the index is out of bounds, throw an exception
             throw new IndexOutOfBoundsException("Index out of bounds: " + index);
         }
         if (size == elements.length) {  // if the size is equal to the length of the array, double the size
@@ -181,73 +181,4 @@ public class MyArrayList<E> implements List<E> {
         System.out.println("Shrinking array from " + myList.length + " to " + temp.length);
         return temp;
     }
-
-
-
-//--------------------------------------------------------------------------------
-
-
-
-//    public static Boolean isOverSized(Object[] myList) {
-//        int counter = 0;
-//        for (int i = 0; i < myList.length; i++) {
-//            if (myList[i] == null) {
-//                counter++;
-//            }
-//        }
-//        if ((counter / myList.length * 100) <= (myList.length / myList.length * 100)) {
-//            halfSize(myList);
-//            return true;
-//        }
-//        return false;
-//    }
-
-    // public static Boolean add(int n) {
-    //// if (myList[elements.length - 1] != 0) {
-    //// doubleSize();
-    //// }
-    //// for (int i = 0; i < myList.length; i++) {
-    //// if (myList[i] != 0) {
-    //// myList[i] = n;
-    //// return true;
-    //// }
-    //// }
-    // return false;
-    // }
-    //
-    // public static void add(int index, int n) {
-    //// if (myList.length - 1 != index) {
-    //// doubleSize();
-    //// }
-    //// for (int i = 0; i < myList.length; i++) {
-    //// if (i == index) {
-    //// myList[i] = n;
-    //// }
-    //// }
-    // }
-    //
-    // public void clear() {
-    //// int[] temp = new int[5];
-    //// myList = temp;
-    // }
-    //
-    // public int size() {
-    //// return myList.length;
-    // }
-    //
-    // public int remove(int index){
-    //// int temp = myList[index];
-    //// myList[index] = 0;
-    //// return temp;
-    // return 1;
-    // }
-    //
-    // public String toString() {
-    // StringBuilder temp = new StringBuilder("Numbers are: ");
-    // for (int i = 0; i < myList.length; i++) {
-    // temp.append(myList[i] + ", ");
-    // }
-    // return temp.toString();
-    // }
-
 }
