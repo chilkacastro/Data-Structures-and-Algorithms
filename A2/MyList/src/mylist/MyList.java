@@ -9,7 +9,7 @@ package mylist;
  *
  * @author Chilka Castro and Christian David
  */
-public interface List<E> {
+public interface MyList<E> {
     void add(int index, E e);
     Boolean add(E e);
     void clear();

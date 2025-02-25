@@ -1,15 +1,12 @@
 package mylist;
 
-import java.util.Objects;
-
 /**
  * MyLinkedList class
  * @author Chilka Castro and Christian David
  */
-public class MyLinkedList<E> implements List<E> {
+public class MyLinkedList<E> implements MyList<E> {
   /**
    * Inner Node class
-   *
    */
   private static class Node<E> {
     private E data;
@@ -45,7 +42,7 @@ public class MyLinkedList<E> implements List<E> {
    * Appends the specified element to the end of this list
    *
    * @param e element to be appended to this list
-   * @return True or False if the element was added
+   * @return True
    */
   public Boolean add(E e) {
     Node<E> newNode = new Node<>(e);
@@ -65,6 +62,7 @@ public class MyLinkedList<E> implements List<E> {
    *
    * @param index index at which the specified element is to be inserted
    * @param e     element to be inserted
+   * @return
    */
   public void add(int index, E e) {
     if (index > size || index < 0) { // if the index is out of bounds, throw an exception

@@ -4,7 +4,7 @@ package mylist;
  * MyArrayList class
  * @author Chilka Castro and Christian David
  */
-public class MyArrayList<E> implements List<E> {
+public class MyArrayList<E> implements MyList<E> {
     private Object[] elements;
     private int size = 0;
     private static final int DEFAULT_CAPACITY = 10;
@@ -17,16 +17,9 @@ public class MyArrayList<E> implements List<E> {
     /**
      * Appends the specified element to the end of this list
      * @param e element to be appended to this list
-     * @return True or False if the element was added
+     * @return True if the element was added
      */
     public Boolean add(E e) {
-//        for (int i = 0; i < size(); i++) {
-//            if (elements[i] == null) {
-//                elements[i] = e;
-//                return true;
-//            }
-//        }
-//        return false;
         if (size == elements.length) {  // if the size is equal to the length of the array, double the size
             elements = doubleSize(elements);
         }
@@ -37,8 +30,10 @@ public class MyArrayList<E> implements List<E> {
 
     /**
      * Inserts the specified element at the specified position in this list
-     * @param index
-     * @param e
+     *
+     * @param index index at which the specified element is to be inserted
+     * @param e     element to be inserted
+     * @return
      */
     public void add(int index, E e) {
         if (index > size || index < 0) { // if the index is out of bounds, throw an exception
@@ -48,7 +43,9 @@ public class MyArrayList<E> implements List<E> {
             elements = doubleSize(elements);
         }
         if (index < size) {           // if the index is less than the size, shift the elements to the right
-            System.arraycopy(elements, index, elements, index + 1, size - index);
+            for (int i = size - 1; i >= index; i--) {
+                elements[i + 1] = elements[i];
+            }
         }
         elements[index] = e;           // insert the element at the specified index
         size++;                        // increment the size
@@ -64,9 +61,9 @@ public class MyArrayList<E> implements List<E> {
     }
 
     /**
-     *  Removes the element at the specified position in this list
-     * @param index
-     * @return
+     * Removes the element at the specified position in this list
+     * @param index index of the element to be removed
+     * @return the element that was removed
      */
     public E remove(int index) {
         if (index >= size || index < 0) {
@@ -78,20 +75,12 @@ public class MyArrayList<E> implements List<E> {
             elements[i] = elements[i + 1];
         }
 
-// OPTION 2: INSTEAD OF FOR LOOP
-//        int elementsToShift = size - index - 1;  // calculate the number of elements to shift to the left
-//        if (elementsToShift > 0) {                  // if there are elements to shift to the left (i.e., not the last element)
-//            System.arraycopy(elements, index + 1, elements, index, elementsToShift);
-//        }
-
         size--;
         elements[size] = null;   // set the last element to null
 
         if (size > DEFAULT_CAPACITY && size < elements.length / 4) { // if the size is less than 1/4 of the length of the array, half the size
-            elements = (Object[]) halfSize(elements);
-
+            elements = halfSize(elements);
         }
-
         return removedElement;
     }
 
@@ -110,30 +99,13 @@ public class MyArrayList<E> implements List<E> {
                 size--;
                 elements[size] = null;
                 if (size > DEFAULT_CAPACITY && size < elements.length / 4) {
-                    elements = (Object[]) halfSize(elements);
+                    elements = halfSize(elements);
                 }
                 return true;
             }
         }
         return false;
-
     }
-    /* OPTION 2: Using System.arraycopy
-    public Boolean remove(Object o) {
-    for (int i = 0; i < size; i++) {
-        if (o.equals((E) elements[i])) {
-            int elementsToShift = size - i - 1;
-            if (elementsToShift > 0) {
-                System.arraycopy(elements, i + 1, elements, i, elementsToShift);
-            }
-            size--;
-            elements[size] = null;
-            return true;
-        }
-    }
-    return false;
-}
-     */
 
     /**
      * Returns the number of elements in this list
@@ -163,22 +135,29 @@ public class MyArrayList<E> implements List<E> {
         return String.format("[%s]", result);
     }
 
+    /**
+     * Doubles the size of the array
+     * @param myList array to be doubled
+     * @return the doubled array
+     */
     public static Object[] doubleSize(Object[] myList) {
         Object[] temp = new Object[myList.length * 2];
-        for (int i = 0; i < myList.length; i++) {         // for loop can be replace with this:   System.arraycopy(myList, 0, temp, 0, myList.length);
+        for (int i = 0; i < myList.length; i++) {
             temp[i] = myList[i];
         }
         return temp;
     }
 
-    public static Object halfSize(Object[] myList) {
-        System.out.println("entering halfSize");
+    /**
+     * Halves the size of the array
+     * @param myList array to be halved
+     * @return the halved array
+     */
+    public static Object[] halfSize(Object[] myList) {
         Object[] temp = new Object[myList.length / 2];
-        System.out.println(temp.length);
-        for (int i = 0; i < myList.length; i++) {          // for loop can be replace with this:   System.arraycopy(myList, 0, temp, 0, temp.length);
+        for (int i = 0; i < temp.length; i++) {
             temp[i] = myList[i];
         }
-        System.out.println("Shrinking array from " + myList.length + " to " + temp.length);
         return temp;
     }
 }
