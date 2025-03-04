@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * ListTester class to test the performance of custom and standard lists
+ * ListTester class to test the performance of custom(MyArrayList and MyLinkedList)
+ * and standard lists(Java's ArrayList and LinkedList)
  * for insertions and removals
  * @author Chilka Castro and Christian David
  */
@@ -18,7 +19,7 @@ public class ListTester {
     private static PrintStream output;
 
     public static void main(String[] args) {
-        try {
+        try {  //
             output = new PrintStream(new FileOutputStream("testrun.txt", true)); // append to file
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -27,7 +28,7 @@ public class ListTester {
 
 //        int[] sizes = {10, 100, 1000}; // different N values
         int[] sizes = {10, 100, 1000, 10000, 100000, 1000000};
-
+        printOutput("\n\n");
         printOutput("=".repeat(50));
         printOutput("            Performance Test Results");
         printOutput("=".repeat(50));

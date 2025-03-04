@@ -9,7 +9,9 @@ public class MyArrayList<E> implements MyList<E> {
     private int size = 0;
     private static final int DEFAULT_CAPACITY = 10;
 
-    // Constructor
+    /**
+     * Constructs an empty list with an initial capacity of ten
+     */
     public MyArrayList() {
         this.elements = new Object[DEFAULT_CAPACITY];
     }
@@ -32,8 +34,7 @@ public class MyArrayList<E> implements MyList<E> {
      * Inserts the specified element at the specified position in this list
      *
      * @param index index at which the specified element is to be inserted
-     * @param e     element to be inserted
-     * @return
+     * @param e element to be inserted
      */
     public void add(int index, E e) {
         if (index > size || index < 0) { // if the index is out of bounds, throw an exception
@@ -48,7 +49,7 @@ public class MyArrayList<E> implements MyList<E> {
             }
         }
         elements[index] = e;           // insert the element at the specified index
-        size++;                        // increment the size
+        size++;
     }
 
     /**
@@ -57,7 +58,7 @@ public class MyArrayList<E> implements MyList<E> {
     public void clear() {
         for (int i = 0; i < size; i++)
             elements[i] = null;    // set all elements to null
-        size = 0;     // set the size to 0
+        size = 0;
     }
 
     /**
@@ -66,6 +67,9 @@ public class MyArrayList<E> implements MyList<E> {
      * @return the element that was removed
      */
     public E remove(int index) {
+        if (size == 0) {
+            throw new NullPointerException("List is empty because of size: " + size());
+        }
         if (index >= size || index < 0) {
             throw new IndexOutOfBoundsException("Index out of bounds: " + index);
         }
@@ -90,6 +94,9 @@ public class MyArrayList<E> implements MyList<E> {
      * @return True or False
      */
     public Boolean remove(Object o) {
+        if (o == null) {
+            throw new NullPointerException("Object is null");
+        }
         for (int i = 0; i < size ; i++) {
             if (o.equals((E) elements[i])) {
                 // deletes the object and moves the values
@@ -122,7 +129,7 @@ public class MyArrayList<E> implements MyList<E> {
     public String toString() {
         String result = "";
         for (int i = 0; i < size; i++) {
-            if (elements[i] != null) {    // if the element is not null, add it to the result string
+            if (elements[i] != null) {                            // if the element is not null, add it to the result string
                 result += elements[i];
                 if (i < size - 1 && elements[i + 1] != null) {   // if the next element is not null, add a comma
                     result += ", ";

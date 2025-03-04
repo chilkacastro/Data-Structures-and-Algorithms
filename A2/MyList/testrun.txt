@@ -32,6 +32,140 @@ N = 100
 Insertion Times (ms):
 List            Insert@Start    Insert@End      Insert@Random  
 MyArrayList     0               0               0              
+MyLinkedList    0               1               0              
+ArrayList       0               0               0              
+LinkedList      0               0               0              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               0               0              
+ArrayList       1               0               0              
+LinkedList      0               0               0              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     0              
+MyLinkedList    0              
+ArrayList       0              
+LinkedList      0              
+
+
+N = 1000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     4               0               3              
+MyLinkedList    0               0               2              
+ArrayList       0               0               1              
+LinkedList      0               1               1              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     3               0               3              
+MyLinkedList    0               3               1              
+ArrayList       0               1               0              
+LinkedList      0               0               0              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     6              
+MyLinkedList    0              
+ArrayList       0              
+LinkedList      1              
+
+
+N = 10000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     167             1               77             
+MyLinkedList    1               0               117            
+ArrayList       8               0               5              
+LinkedList      1               1               60             
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     80              1               56             
+MyLinkedList    0               194             88             
+ArrayList       7               0               5              
+LinkedList      1               1               37             
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     100            
+MyLinkedList    1              
+ArrayList       9              
+LinkedList      1              
+
+
+N = 100000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     9543            7               8666           
+MyLinkedList    7               2               22797          
+ArrayList       730             0               399            
+LinkedList      2               1               13564          
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     10820           6               8000           
+MyLinkedList    0               14807           8366           
+ArrayList       752             6               399            
+LinkedList      6               1               3593           
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     11524          
+MyLinkedList    2              
+ArrayList       762            
+LinkedList      2              
+
+
+N = 1000000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+
+
+// took too long when N = 1000000
+
+
+==================================================
+            Performance Test Results
+==================================================
+
+
+N = 10
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     0               0               0              
+MyLinkedList    1               0               0              
+ArrayList       0               0               0              
+LinkedList      0               0               0              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               0               0              
+ArrayList       0               0               0              
+LinkedList      0               0               0              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     0              
+MyLinkedList    0              
+ArrayList       0              
+LinkedList      0              
+
+
+N = 100
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     0               0               0              
 MyLinkedList    0               0               0              
 ArrayList       0               0               0              
 LinkedList      0               0               0              
@@ -55,21 +189,289 @@ N = 1000
 
 Insertion Times (ms):
 List            Insert@Start    Insert@End      Insert@Random  
-MyArrayList     2               1               2              
+MyArrayList     2               0               1              
 MyLinkedList    0               0               1              
-ArrayList       0               1               0              
-LinkedList      1               0               1              
+ArrayList       1               0               0              
+LinkedList      0               1               0              
 
 Removal Times (ms):
 List            Remove@Start    Remove@End      Remove@Random  
 MyArrayList     3               0               2              
-MyLinkedList    0               1               1              
-ArrayList       0               0               0              
-LinkedList      1               0               1              
+MyLinkedList    0               2               1              
+ArrayList       1               0               0              
+LinkedList      0               0               1              
 
 Random Value Removal Times (ms):
 List            RemoveByValue  
 MyArrayList     4              
+MyLinkedList    0              
+ArrayList       1              
+LinkedList      0              
+
+
+N = 10000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     124             1               108            
+MyLinkedList    1               1               112            
+ArrayList       7               0               5              
+LinkedList      1               1               62             
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     96              1               54             
+MyLinkedList    1               160             71             
+ArrayList       7               1               5              
+LinkedList      1               1               36             
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     96             
+MyLinkedList    0              
+ArrayList       8              
+LinkedList      1              
+
+
+N = 100000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     9496            7               8659           
+MyLinkedList    7               2               22470          
+ArrayList       717             0               394            
+LinkedList      2               1               13971          
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     11194           6               6164           
+MyLinkedList    4               14791           8286           
+ArrayList       754             7               403            
+LinkedList      5               1               3578           
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     11496          
+MyLinkedList    1              
+ArrayList       758            
+LinkedList      1              
+
+
+N = 1000000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+
+
+// took too long when N = 1000000
+
+
+==================================================
+            Performance Test Results
+==================================================
+
+
+N = 10
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               0               0              
+ArrayList       0               0               0              
+LinkedList      1               0               0              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               0               1              
+ArrayList       0               0               0              
+LinkedList      0               0               0              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     0              
+MyLinkedList    0              
+ArrayList       0              
+LinkedList      0              
+
+
+N = 100
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               0               0              
+ArrayList       0               0               0              
+LinkedList      0               0               0              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               0               0              
+ArrayList       0               0               0              
+LinkedList      0               1               0              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     0              
+MyLinkedList    1              
+ArrayList       0              
+LinkedList      0              
+
+
+N = 1000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     4               0               3              
+MyLinkedList    0               0               1              
+ArrayList       0               0               1              
+LinkedList      1               0               1              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     4               0               2              
+MyLinkedList    0               1               1              
+ArrayList       0               0               0              
+LinkedList      0               0               1              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     5              
+MyLinkedList    0              
+ArrayList       1              
+LinkedList      0              
+
+
+N = 10000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     143             1               88             
+MyLinkedList    1               0               102            
+ArrayList       7               0               5              
+LinkedList      1               1               59             
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     104             1               53             
+MyLinkedList    0               148             70             
+ArrayList       7               0               5              
+LinkedList      1               1               37             
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     100            
+MyLinkedList    1              
+ArrayList       8              
+LinkedList      1              
+
+
+N = 100000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     9496            7               8763           
+MyLinkedList    7               2               23582          
+ArrayList       738             0               400            
+LinkedList      2               2               13923          
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     11532           6               6168           
+MyLinkedList    4               14916           8388           
+ArrayList       749             7               398            
+LinkedList      5               2               3593           
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     11512          
+MyLinkedList    1              
+ArrayList       756            
+LinkedList      2              
+
+
+N = 1000000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+
+// took too long when N = 1000000
+
+
+
+==================================================
+            Performance Test Results
+==================================================
+
+
+N = 10
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     0               0               0              
+MyLinkedList    1               0               0              
+ArrayList       0               0               0              
+LinkedList      0               0               1              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               0               0              
+ArrayList       0               0               0              
+LinkedList      0               0               0              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     0              
+MyLinkedList    0              
+ArrayList       0              
+LinkedList      0              
+
+
+N = 100
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     0               0               1              
+MyLinkedList    0               0               0              
+ArrayList       0               0               0              
+LinkedList      0               0               0              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     0               0               0              
+MyLinkedList    0               2               0              
+ArrayList       1               0               0              
+LinkedList      0               1               1              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     0              
+MyLinkedList    0              
+ArrayList       0              
+LinkedList      0              
+
+
+N = 1000
+
+Insertion Times (ms):
+List            Insert@Start    Insert@End      Insert@Random  
+MyArrayList     6               0               9              
+MyLinkedList    1               0               1              
+ArrayList       1               0               1              
+LinkedList      0               0               1              
+
+Removal Times (ms):
+List            Remove@Start    Remove@End      Remove@Random  
+MyArrayList     4               0               3              
+MyLinkedList    0               2               1              
+ArrayList       1               0               0              
+LinkedList      0               0               1              
+
+Random Value Removal Times (ms):
+List            RemoveByValue  
+MyArrayList     8              
 MyLinkedList    0              
 ArrayList       0              
 LinkedList      0              
@@ -79,48 +481,48 @@ N = 10000
 
 Insertion Times (ms):
 List            Insert@Start    Insert@End      Insert@Random  
-MyArrayList     188             1               125            
-MyLinkedList    1               0               149            
+MyArrayList     146             2               71             
+MyLinkedList    1               0               133            
 ArrayList       7               0               5              
-LinkedList      1               1               54             
+LinkedList      1               0               60             
 
 Removal Times (ms):
 List            Remove@Start    Remove@End      Remove@Random  
-MyArrayList     108             1               62             
-MyLinkedList    0               204             101            
-ArrayList       10              1               7              
-LinkedList      2               2               45             
+MyArrayList     98              0               53             
+MyLinkedList    1               152             73             
+ArrayList       7               1               5              
+LinkedList      0               1               37             
 
 Random Value Removal Times (ms):
 List            RemoveByValue  
-MyArrayList     201            
+MyArrayList     96             
 MyLinkedList    1              
-ArrayList       9              
-LinkedList      2              
+ArrayList       7              
+LinkedList      0              
 
 
 N = 100000
 
 Insertion Times (ms):
 List            Insert@Start    Insert@End      Insert@Random  
-MyArrayList     9610            7               9004           
-MyLinkedList    7               2               23906          
-ArrayList       741             1               399            
-LinkedList      1               2               13391          
+MyArrayList     9487            8               8629           
+MyLinkedList    7               2               23319          
+ArrayList       735             0               397            
+LinkedList      1               1               14048          
 
 Removal Times (ms):
 List            Remove@Start    Remove@End      Remove@Random  
-MyArrayList     11662           6               6162           
-MyLinkedList    1               14936           8267           
-ArrayList       849             7               406            
-LinkedList      7               2               3691           
+MyArrayList     11200           7               6167           
+MyLinkedList    4               14735           8611           
+ArrayList       752             7               407            
+LinkedList      5               1               3593           
 
 Random Value Removal Times (ms):
 List            RemoveByValue  
-MyArrayList     11852          
-MyLinkedList    1              
-ArrayList       794            
-LinkedList      2              
+MyArrayList     11506          
+MyLinkedList    2              
+ArrayList       757            
+LinkedList      1              
 
 
 N = 1000000
@@ -128,5 +530,4 @@ N = 1000000
 Insertion Times (ms):
 List            Insert@Start    Insert@End      Insert@Random  
 
-
-// takes a long time
+// took too long when N = 1000000

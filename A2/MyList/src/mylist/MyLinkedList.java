@@ -114,6 +114,10 @@ public class MyLinkedList<E> implements MyList<E> {
    * @return the element that was removed from the list
    */
   public E remove(int index) {
+    if (size == 0) {  // if the list is empty, throw an exception}
+        throw new NullPointerException("List is empty because of size: " + size());
+    }
+
     if (index < 0 || index >= size) {  // if the index is out of bounds, throw an exception
        throw new IndexOutOfBoundsException("Index out of bounds: " + index);
     }
@@ -154,6 +158,10 @@ public class MyLinkedList<E> implements MyList<E> {
    * @return True or False if the element was removed
    */
   public Boolean remove(Object o) {
+    if (size == 0) {  // if the list is empty, throw an exception}
+      throw new NullPointerException("List is empty because of size: " + size());
+    }
+
     Node<E> current = head;  // set the current node to the head to start the search with the first node
 
     while (current != null) { // loop through the list until the current node is null
