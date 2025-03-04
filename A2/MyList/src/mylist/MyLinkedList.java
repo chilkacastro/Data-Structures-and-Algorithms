@@ -14,7 +14,7 @@ public class MyLinkedList<E> implements MyList<E> {
     private Node<E> prev;
 
     /**
-     * Constructor
+     * Constructor for Node
      *
      * @param data the data to be stored in the node
      */
@@ -30,7 +30,7 @@ public class MyLinkedList<E> implements MyList<E> {
   private int size;
 
   /**
-   * Constructor
+   * Constructor for MyLinkedList
    */
   public MyLinkedList() {
     this.head = null;
@@ -42,7 +42,7 @@ public class MyLinkedList<E> implements MyList<E> {
    * Appends the specified element to the end of this list
    *
    * @param e element to be appended to this list
-   * @return True
+   * @return True if the element was added
    */
   public Boolean add(E e) {
     Node<E> newNode = new Node<>(e);
@@ -61,8 +61,7 @@ public class MyLinkedList<E> implements MyList<E> {
    * Inserts the specified element at the specified position in this list
    *
    * @param index index at which the specified element is to be inserted
-   * @param e     element to be inserted
-   * @return
+   * @param e element to be inserted
    */
   public void add(int index, E e) {
     if (index > size || index < 0) { // if the index is out of bounds, throw an exception
