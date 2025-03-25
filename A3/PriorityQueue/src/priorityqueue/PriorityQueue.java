@@ -36,7 +36,10 @@ public class PriorityQueue {
 
             int i = 0;
 
+
+            // Checks if min and max and bubbles down properly
             
+            // Min heap
             if (this.state) {
                 while (true) {
                     int child1 = 2 * i + 1;
@@ -65,27 +68,115 @@ public class PriorityQueue {
                 while (true) {
                     int child1 = 2 * i + 1;
                     int child2 = 2 * i + 2;
-                    int smallest = i;
+                    int biggest = i;
 
-                    // Check if left child exists and is smaller
-                    if (child1 > size && elements[child1].key > elements[smallest].key) {
-                        smallest = child1;
+                    // Check if left child exists and is bigger
+                    if (child1 > size && elements[child1].key > elements[biggest].key) {
+                        biggest = child1;
                     }
 
-                    // Check if right child exists and is even smaller
-                    if (child2 > size && elements[child2].key > elements[smallest].key) {
-                        smallest = child2;
+                    // Check if right child exists and is even bigger
+                    if (child2 > size && elements[child2].key > elements[biggest].key) {
+                        biggest = child2;
                     }
 
                     // If i is smallest, heap property is satisfied
-                    if (smallest == i) break;
+                    if (biggest == i) break;
 
                     // Swap with the smallest child
-                    swap(i, smallest);
-                    i = smallest;
+                    swap(i, biggest);
+                    i = biggest;
                 }
             }
             // Bubble down for Min heap
+//                while (true) {
+//                    int child1 = 2 * i + 1;
+//                    int child2 = 2 * i + 2;
+//                    int smallest = i;
+//
+//                    // Check if left child exists and is smaller
+//                    if (child1 < size && elements[child1].key < elements[smallest].key) {
+//                        smallest = child1;
+//                    }
+//
+//                    // Check if right child exists and is even smaller
+//                    if (child2 < size && elements[child2].key < elements[smallest].key) {
+//                        smallest = child2;
+//                    }
+//
+//                    // If i is smallest, heap property is satisfied
+//                    if (smallest == i) break;
+//
+//                    // Swap with the smallest child
+//                    swap(i, smallest);
+//                    i = smallest;
+//                }
+        }
+        
+        // Adds to the end of the array
+        public void insert(int k, String value) {
+            Entry temp = new Entry(value, k);
+            
+            // adds at the very last position.
+            elements[size] = temp;
+            int i = size;
+            this.size++;
+            
+            //A method that bubbles up and down the array
+            
+            //For min heap
+            if(this.state) {
+                while (i > 0) {
+                    int parent = (i - 1) / 2;
+                
+                    if (elements[i].key >= elements[parent].key) {
+                        break;
+                    }
+                
+                    swap(i, parent);
+                
+                    i = parent;
+                }
+            }
+            
+            //For max Heap
+            else {
+                    }
+            while (i > 0) {
+                int parent = (i - 1) / 2;
+                
+                if (elements[i].key <= elements[parent].key) {
+                    break;
+                }
+                
+                swap(i, parent);
+                
+                i = parent;
+            }
+            
+            //Dynamic sizing.
+            if (elements.length == size) {
+                doubleSize();
+            }
+        }
+        
+        public Entry top() {
+            return elements[0];
+        }
+        
+        public Entry remove(Entry e) {
+            swap(search(e.key), size);
+            elements[size] = null;
+            
+                        size--;
+
+            int i = 0;
+
+
+            // Checks if min and max and bubbles down properly
+            
+            // Min heap
+            if (this.state) {
                 while (true) {
                     int child1 = 2 * i + 1;
                     int child2 = 2 * i + 2;
@@ -108,42 +199,32 @@ public class PriorityQueue {
                     swap(i, smallest);
                     i = smallest;
                 }
-        }
-        
-        // Adds to the end of the array
-        public void insert(int k, String value) {
-            Entry temp = new Entry(value, k);
-            
-            // adds at the very last position.
-            elements[size] = temp;
-            int i = size;
-            this.size++;
-            
-            //A method that bubbles up and down the array
-            while (i > 0) {
-                int parent = (i - 1) / 2;
-                
-                if (elements[i].key >= elements[parent].key) {
-                    break;
-                }
-                
-                swap(i, parent);
-                
-                i = parent;
-            } 
-            
-            //Dynamic sizing.
-            if (elements.length == size) {
-                doubleSize();
             }
-        }
-        
-        public Entry top() {
-            return elements[0];
-        }
-        
-        public Entry remove(Entry e) {
-            return elements[0];
+            else{
+                while (true) {
+                    int child1 = 2 * i + 1;
+                    int child2 = 2 * i + 2;
+                    int biggest = i;
+
+                    // Check if left child exists and is bigger
+                    if (child1 > size && elements[child1].key > elements[biggest].key) {
+                        biggest = child1;
+                    }
+
+                    // Check if right child exists and is even bigger
+                    if (child2 > size && elements[child2].key > elements[biggest].key) {
+                        biggest = child2;
+                    }
+
+                    // If i is smallest, heap property is satisfied
+                    if (biggest == i) break;
+
+                    // Swap with the smallest child
+                    swap(i, biggest);
+                    i = biggest;
+                }
+            }
+            return e;
         }
         
         public int replaceKey(int i, int j) {
