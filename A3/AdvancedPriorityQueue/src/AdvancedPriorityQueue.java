@@ -5,7 +5,7 @@ import java.util.Arrays;
  * @author Chilka Castro and Christian David
  */
 public class AdvancedPriorityQueue {
-    private boolean state = true;
+    private boolean state;
     private Entry[] elements;  // array of Entry objects
     private int size;  // how many elements are in the array Entry
     private static int DEFAULT_CAPACITY = 10;
@@ -15,6 +15,7 @@ public class AdvancedPriorityQueue {
      * Constructor for AdvancedPriorityQueue
      */
     public AdvancedPriorityQueue() {
+        this.state = true;  // starts in min heap mode
         this.elements = new Entry[DEFAULT_CAPACITY];
         this.size = 0;
     }
@@ -23,10 +24,10 @@ public class AdvancedPriorityQueue {
      * Switches the queue between min-heap and max-heap modes.
      */
     public void toggle() {
-        if (this.state)  // Switches from min and max. Min is true and max is false.
-            this.state = false;
+        if (state)  // Switches from min and max. Min is true and max is false.
+            state = false;
         else
-            this.state = true;
+            state = true;
 
         if (size > 0) {
             fixTree();
@@ -43,7 +44,6 @@ public class AdvancedPriorityQueue {
         if (size == 0) {
             throw new RuntimeException("Array is empty");
         }
-
         Entry removedElement = elements[0];
         elements[0] = elements[size - 1];
         elements[size - 1] = null;
@@ -57,7 +57,7 @@ public class AdvancedPriorityQueue {
      * This method is used to maintain the heap property after removing the top element
      */
     private void bubbleDown() {
-        if (this.state)
+        if (state)
             bubbleDownMinHeap();
         else
             bubbleDownMaxHeap();
@@ -73,13 +73,14 @@ public class AdvancedPriorityQueue {
             int right = 2 * i + 2;
             int smallest = i;
 
+
             // Check if left child exists and is smaller
-            if (left < size && elements[left].key < elements[smallest].key) {
+            if (left < size && elements[left] != null && elements[left].key < elements[smallest].key) {
                 smallest = left;
             }
 
             // Check if right child exists and is even smaller
-            if (right < size && elements[right].key < elements[smallest].key) {
+            if (right < size && elements[right] != null && elements[right].key < elements[smallest].key) {
                 smallest = right;
             }
 
@@ -104,21 +105,22 @@ public class AdvancedPriorityQueue {
             int right = getRightChildIndex(i);
             int biggest = i;
 
+
             // Check if left child exists and is bigger
-            if (getLeftChildIndex(i) < size && elements[left].key > elements[biggest].key) {
+            if (left < size && elements[left] != null && elements[left].key > elements[biggest].key) {
                 biggest = left;
             }
 
             // Check if right child exists and is even bigger
-            if (right < size && elements[right].key > elements[biggest].key) {
+            if (right < size && elements[right] != null && elements[right].key > elements[biggest].key) {
                 biggest = right;
             }
 
-            // If i is smallest, heap property is satisfied
+            // If i is biggest, heap property is satisfied
             if (biggest == i)
                 break;
 
-            // Swap with the smallest child
+            // Swap with the biggest child
             swap(i, biggest);
             i = biggest;
         }
@@ -139,7 +141,7 @@ public class AdvancedPriorityQueue {
         size++;
 
         // For min heap: bubble up until parent's key is less than or equal to child's key.
-        if (this.state) {
+        if (state) {
             while (i > 0) {
                 int parent = getParentIndex(i);
                 if (elements[i].key >= elements[parent].key) {
@@ -233,11 +235,11 @@ public class AdvancedPriorityQueue {
      * @return true if the queue is empty, false otherwise
      */
     public boolean isEmpty() {
-        return this.size == 0;
+        return size == 0;
     }
 
     public int size() {
-        return this.size;
+        return size;
     }
 
     public Entry peekAt(int i) {
@@ -314,21 +316,25 @@ public class AdvancedPriorityQueue {
 //        sb.append('}');
 //        return sb.toString();
 //    }
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("AdvancedPriorityQueue{");
-        sb.append("state=").append(state ? "Min heap" : "Max heap");
-        sb.append(", keys=[");
-        for (int i = 0; i < size; i++) {
-            sb.append(elements[i].key);
-            if (i < size - 1) {
+@Override
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("AdvancedPriorityQueue{");
+    sb.append("state=").append(state ? "Min heap" : "Max heap");
+    sb.append(", entries=[");
+    boolean first = true;
+    for (int i = 0; i < elements.length; i++) {
+        if (elements[i] != null) {
+            if (!first) {
                 sb.append(", ");
             }
+            sb.append("{key=").append(elements[i].key).append(", value=").append(elements[i].value).append("}");
+            first = false;
         }
-        sb.append("], size=").append(size);
-        sb.append('}');
-        return sb.toString();
     }
+    sb.append("], size=").append(size);
+    sb.append('}');
+    return sb.toString();
+}
 }
 
