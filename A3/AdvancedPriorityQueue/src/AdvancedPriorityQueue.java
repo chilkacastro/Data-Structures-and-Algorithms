@@ -29,9 +29,9 @@ public class AdvancedPriorityQueue {
         else
             state = true;
 
-        if (size > 0) {
+        if (size > 0)
             fixTree();
-        }
+
     }
 
     /**
@@ -49,9 +49,9 @@ public class AdvancedPriorityQueue {
         elements[size - 1] = null;
         size--;
 
-        if (size > DEFAULT_CAPACITY && size < elements.length / 4) {
+        if (size > DEFAULT_CAPACITY && size < elements.length / 4)
             halfSize();
-        }
+
         bubbleDown();
         return removedElement;
     }
@@ -109,7 +109,6 @@ public class AdvancedPriorityQueue {
             int right = getRightChildIndex(i);
             int biggest = i;
 
-
             // Check if left child exists and is bigger
             if (left < size && elements[left] != null && elements[left].key > elements[biggest].key) {
                 biggest = left;
@@ -135,15 +134,25 @@ public class AdvancedPriorityQueue {
      * return the entry object that was added to the queue
      */
     public Entry insert(int k, String v) {
-        if (size == elements.length) {
+        if (size == elements.length)
             doubleSize();
-        }
 
         Entry newElement = new Entry(k, v);
         elements[size] = newElement;
         int i = size;
         size++;
 
+        bubbleUp(i);
+
+
+        return newElement;
+    }
+
+    /**
+     * Helper method to bubble up the array
+     * This method is used to maintain the heap property after inserting a new element
+     */
+    public void bubbleUp(int i) {
         // For min heap: bubble up until parent's key is less than or equal to child's key.
         if (state) {
             while (i > 0) {
@@ -166,8 +175,6 @@ public class AdvancedPriorityQueue {
                 i = parent;
             }
         }
-
-        return newElement;
     }
 
     //Helper method to get the parent index
@@ -202,16 +209,16 @@ public class AdvancedPriorityQueue {
      * @return the entry that was removed
      */
     public Entry remove(Entry e) {
-        if (size == 0) {
+        if (size == 0)
             throw new NullPointerException("Array is empty because of size: " + size());
-        }
 
         swap(search(e.key), size); // swap the element to be removed with the last element
         elements[size] = null;
         size--;
-        if (size > DEFAULT_CAPACITY && size < elements.length / 4) {
+
+        if (size > DEFAULT_CAPACITY && size < elements.length / 4)
             halfSize();
-        }
+
         bubbleDown();
         return e;
     }
@@ -273,34 +280,39 @@ public class AdvancedPriorityQueue {
      * Returns the n-th entry in the priority queue (e.g., the n-th smallest key in a min-
      * heap or the n-th largest key in a max-heap) without removing it. Throws an error if n is out of
      * bounds.
-     * @param i the index of the entry to peek at
-     * @return the entry at index i
+     * @param n the nth entry to peek at
+     * @return the n-th entry in the priority queue
      */
-    public Entry peekAt(int i) {
-        if (i < 0 || i >= size) {
+    public Entry peekAt(int n) {
+        if (n < 0 || n >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
+        if (n == 0) {
+            return top();
+        }
         else {
-            int index = search(i);
-            return elements[index];
+            return elements[n];
         }
     }
 
-    public void merge(AdvancedPriorityQueue temp) {
-        int i = 0;
-        while (i < temp.size) {
-            insert(temp.elements[i].key, temp.elements[i].value);
+    /**
+     * Merges the current priority queue with another APQ, combining all
+     * entries into a single APQ. The result should maintain the current state (Min or Max) of the
+     * primary APQ.
+     * @param otherAPQ the other APQ to merge
+     */
+    public void merge(AdvancedPriorityQueue otherAPQ) {
+        for (int i = 0; i < otherAPQ.size; i++) {
+            insert(otherAPQ.elements[i].key, otherAPQ.elements[i].value);
         }
     }
 
     //Helper method for searching key and values.
     private int search(int i){
         int index = 0;
-
-        while(i != elements[index].key){
+        while(i != elements[index].key) {
             index++;
         }
-
         return index;
     }
 
@@ -310,7 +322,6 @@ public class AdvancedPriorityQueue {
         elements[j] = elements[i];
         elements[i] = temp;
     }
-
 
     //This is for dynamic sizing of the PQueue
     private void doubleSize() {
@@ -347,42 +358,26 @@ public class AdvancedPriorityQueue {
         }
 
     }
-// TO VIEW BOTH VALUES AND KEYS
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("AdvancedPriorityQueue{");
-//        sb.append("state=").append(state ? "Min heap" : "Max heap");
-//        sb.append(", entries=[");
-//        for (int i = 0; i < size; i++) {
-//            sb.append("{key=").append(elements[i].key).append(", value=").append(elements[i].value).append("}");
-//            if (i < size - 1) {
-//                sb.append(", ");
-//            }
-//        }
-//        sb.append("], size=").append(size);
-//        sb.append('}');
-//        return sb.toString();
-//    }
-@Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("AdvancedPriorityQueue{");
-    sb.append("state=").append(state ? "Min heap" : "Max heap");
-    sb.append(", entries=[");
-    boolean first = true;
-    for (int i = 0; i < elements.length; i++) {
-        if (elements[i] != null) {
-            if (!first) {
-                sb.append(", ");
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("AdvancedPriorityQueue{");
+        sb.append("state=").append(state ? "Min heap" : "Max heap");
+        sb.append(", entries=[");
+        boolean first = true;
+        for (int i = 0; i < elements.length; i++) {
+            if (elements[i] != null) {
+                if (!first) {
+                    sb.append(", ");
+                }
+                sb.append("{key=").append(elements[i].key).append(", value=").append(elements[i].value).append("}");
+                first = false;
             }
-            sb.append("{key=").append(elements[i].key).append(", value=").append(elements[i].value).append("}");
-            first = false;
         }
+        sb.append("], size=").append(size);
+        sb.append('}');
+        return sb.toString();
     }
-    sb.append("], size=").append(size);
-    sb.append('}');
-    return sb.toString();
-}
 }
 
