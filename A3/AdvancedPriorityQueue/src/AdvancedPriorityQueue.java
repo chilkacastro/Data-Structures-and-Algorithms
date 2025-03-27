@@ -8,7 +8,7 @@ public class AdvancedPriorityQueue {
     private boolean state;
     private Entry[] elements;  // array of Entry objects
     private int size;  // how many elements are in the array Entry
-    private static int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 10;
 
 
     /**
@@ -41,13 +41,17 @@ public class AdvancedPriorityQueue {
      */
     public Entry removeTop() {  //
         // if no elements in the array, throw an exception
-        if (size == 0) {
+        if (size == 0)
             throw new RuntimeException("Array is empty");
-        }
+
         Entry removedElement = elements[0];
         elements[0] = elements[size - 1];
         elements[size - 1] = null;
         size--;
+
+        if (size > DEFAULT_CAPACITY && size < elements.length / 4) {
+            halfSize();
+        }
         bubbleDown();
         return removedElement;
     }
@@ -181,10 +185,11 @@ public class AdvancedPriorityQueue {
         return 2 * i + 2;
     }
 
-    /** Retrieves the entry with the smallest or largest key
-     *  (depending on the current mode) without removing it.
+    /**
+     * Retrieves the entry with the smallest or largest key
+     * (depending on the current mode) without removing it.
      *
-     *  return the entry with the smallest or largest key
+     * return the entry with the smallest or largest key
      */
     public Entry top() {
         return elements[0];
@@ -197,36 +202,54 @@ public class AdvancedPriorityQueue {
      * @return the entry that was removed
      */
     public Entry remove(Entry e) {
+        if (size == 0) {
+            throw new NullPointerException("Array is empty because of size: " + size());
+        }
+
         swap(search(e.key), size); // swap the element to be removed with the last element
         elements[size] = null;
         size--;
+        if (size > DEFAULT_CAPACITY && size < elements.length / 4) {
+            halfSize();
+        }
         bubbleDown();
         return e;
     }
 
-    public int replaceKey(int i, int j) {
-        int index = search(i);
-        elements[index].key = j;
+    /**
+     * Updates the key of entry e to k and returns the old key.
+     *
+     * @param e the entry to be updated
+     * @param k the new key
+     * @return the old key
+     */
+    public int replaceKey(Entry e, int k) {
+        int index = search(e.key);
+        int oldKey = elements[index].key;
+        elements[index].key = k;
         fixTree();
-        return i;
+        return oldKey;
     }
 
-    public String replaceValue(int i, String value) {
-        int index = search(i);
+    /**
+     * Updates the value of entry e to v and returns the old value.
+     * @param e the entry to be updated
+     * @param value the new value to update
+     * @return the old value of the entry
+     */
+    public String replaceValue(Entry e, String value) {
+        int index = search(e.key);
         String oldValue = elements[index].value;
         elements[index].value = value;
-
         return oldValue;
     }
 
-
+    /**
+     * Returns the current mode of the queue (Min or Max).
+     * @return the current mode of the queue
+     */
     public String state() {
-        if (state) {
-            return "Min heap";
-        }
-        else {
-            return "Max heap";
-        }
+        return state ? "Min heap" : "Max heap";
     }
 
 
@@ -238,13 +261,29 @@ public class AdvancedPriorityQueue {
         return size == 0;
     }
 
+    /**
+     * Returns the total number of entries in the queue.
+     * @return the number of entries in the queue
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Returns the n-th entry in the priority queue (e.g., the n-th smallest key in a min-
+     * heap or the n-th largest key in a max-heap) without removing it. Throws an error if n is out of
+     * bounds.
+     * @param i the index of the entry to peek at
+     * @return the entry at index i
+     */
     public Entry peekAt(int i) {
-        int index = search(i);
-        return elements[index];
+        if (i < 0 || i >= size) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
+        }
+        else {
+            int index = search(i);
+            return elements[index];
+        }
     }
 
     public void merge(AdvancedPriorityQueue temp) {
@@ -284,7 +323,16 @@ public class AdvancedPriorityQueue {
         elements = temp;
     }
 
-    //A helper method to help in toggling the array from min and max.
+    private void halfSize() {
+        Entry[] temp = new Entry[elements.length / 2];
+
+        for(int i = 0; i < temp.length; i++) {
+            temp[i] = elements[i];
+        }
+        elements = temp;
+    }
+
+    // A helper method to help in toggling the array from min and max.
     private void fixTree() {
         Entry[] temp1 = new Entry[size];
         for (int i = 0; i < size; i++) {
