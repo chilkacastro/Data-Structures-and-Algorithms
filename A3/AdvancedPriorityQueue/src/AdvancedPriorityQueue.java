@@ -1,23 +1,36 @@
+import java.util.Arrays;
+
 /**
  * Advanced Priority Queue class that can toggle between min and max heaps
  * @author Chilka Castro and Christian David
  */
 public class AdvancedPriorityQueue {
-    Boolean state = true;
-    Entry[] elements;
-    int size;  // how many elements are in the array Entry
+    private boolean state = true;
+    private Entry[] elements;  // array of Entry objects
+    private int size;  // how many elements are in the array Entry
+    private static int DEFAULT_CAPACITY = 10;
+
+
+    /**
+     * Constructor for AdvancedPriorityQueue
+     */
+    public AdvancedPriorityQueue() {
+        this.elements = new Entry[DEFAULT_CAPACITY];
+        this.size = 0;
+    }
 
     /**
      * Switches the queue between min-heap and max-heap modes.
      */
     public void toggle() {
-        if (this.state) {  // Switches from min and max. Min is true and max is false.
+        if (this.state)  // Switches from min and max. Min is true and max is false.
             this.state = false;
-        }
-        else {
+        else
             this.state = true;
+
+        if (size > 0) {
+            fixTree();
         }
-        fixTree();
     }
 
     /**
@@ -30,6 +43,7 @@ public class AdvancedPriorityQueue {
         if (size == 0) {
             throw new RuntimeException("Array is empty");
         }
+
         Entry removedElement = elements[0];
         elements[0] = elements[size - 1];
         elements[size - 1] = null;
@@ -55,18 +69,18 @@ public class AdvancedPriorityQueue {
     private void bubbleDownMinHeap() {
         int i = 0;
         while (true) {
-            int child1 = 2 * i + 1;
-            int child2 = 2 * i + 2;
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
             int smallest = i;
 
             // Check if left child exists and is smaller
-            if (child1 < size && elements[child1].key < elements[smallest].key) {
-                smallest = child1;
+            if (left < size && elements[left].key < elements[smallest].key) {
+                smallest = left;
             }
 
             // Check if right child exists and is even smaller
-            if (child2 < size && elements[child2].key < elements[smallest].key) {
-                smallest = child2;
+            if (right < size && elements[right].key < elements[smallest].key) {
+                smallest = right;
             }
 
             // If i is smallest, heap property is satisfied
@@ -80,28 +94,29 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to bubble down the array for max heap
+     * Helper method to bubble down the array for max heap -> so the largest element is at the top
      */
     private void bubbleDownMaxHeap() {
         int i = 0;
 
         while (true) {
-            int child1 = 2 * i + 1;
-            int child2 = 2 * i + 2;
+            int left = getLeftChildIndex(i);
+            int right = getRightChildIndex(i);
             int biggest = i;
 
             // Check if left child exists and is bigger
-            if (child1 > size && elements[child1].key > elements[biggest].key) {
-                biggest = child1;
+            if (getLeftChildIndex(i) < size && elements[left].key > elements[biggest].key) {
+                biggest = left;
             }
 
             // Check if right child exists and is even bigger
-            if (child2 > size && elements[child2].key > elements[biggest].key) {
-                biggest = child2;
+            if (right < size && elements[right].key > elements[biggest].key) {
+                biggest = right;
             }
 
             // If i is smallest, heap property is satisfied
-            if (biggest == i) break;
+            if (biggest == i)
+                break;
 
             // Swap with the smallest child
             swap(i, biggest);
@@ -109,59 +124,78 @@ public class AdvancedPriorityQueue {
         }
     }
 
-    // Adds to the end of the array
-    public void insert(int k, String value) {
-        Entry temp = new Entry(value, k);
+    /** Adds a new entry with key k and value v to the queue,
+     * returning the resulting entry object.
+     * return the entry object that was added to the queue
+     */
+    public Entry insert(int k, String v) {
+        if (size == elements.length) {
+            doubleSize();
+        }
 
-        // adds at the very last position.
-        elements[size] = temp;
+        Entry newElement = new Entry(k, v);
+        elements[size] = newElement;
         int i = size;
-        this.size++;
+        size++;
 
-        //A method that bubbles up and down the array
-
-        //For min heap
-        if(this.state) {
+        // For min heap: bubble up until parent's key is less than or equal to child's key.
+        if (this.state) {
             while (i > 0) {
-                int parent = (i - 1) / 2;
-
+                int parent = getParentIndex(i);
                 if (elements[i].key >= elements[parent].key) {
                     break;
                 }
-
                 swap(i, parent);
-
+                i = parent;
+            }
+        }
+        // For max heap: bubble up until parent's key is greater than or equal to child's key.
+        else {
+            while (i > 0) {
+                int parent = (i - 1) / 2;
+                if (elements[i].key <= elements[parent].key) {
+                    break;
+                }
+                swap(i, parent);
                 i = parent;
             }
         }
 
-        //For max Heap
-        else {
-        }
-        while (i > 0) {
-            int parent = (i - 1) / 2;
-
-            if (elements[i].key <= elements[parent].key) {
-                break;
-            }
-
-            swap(i, parent);
-
-            i = parent;
-        }
-
-        //Dynamic sizing.
-        if (elements.length == size) {
-            doubleSize();
-        }
+        return newElement;
     }
 
+    //Helper method to get the parent index
+    private int getParentIndex(int i) {
+        return (i - 1) / 2;
+    }
+
+    // Helper method to get the left child index
+    private int getLeftChildIndex(int i) {
+        return 2 * i + 1;
+    }
+
+    // Helper method to get the right child index
+    private int getRightChildIndex(int i) {
+        return 2 * i + 2;
+    }
+
+    /** Retrieves the entry with the smallest or largest key
+     *  (depending on the current mode) without removing it.
+     *
+     *  return the entry with the smallest or largest key
+     */
     public Entry top() {
         return elements[0];
     }
 
+    /**
+     * Removes a specific entry e from the queue and returns it.
+     *
+     * @param e the entry to be removed
+     * @return the entry that was removed
+     */
     public Entry remove(Entry e) {
-        swap(search(e.key), size);
+        swap(search(e.key), size); // swap the element to be removed with the last element
         elements[size] = null;
         size--;
         bubbleDown();
@@ -251,14 +285,50 @@ public class AdvancedPriorityQueue {
     //A helper method to help in toggling the array from min and max.
     private void fixTree() {
         Entry[] temp1 = new Entry[size];
-        Entry[] temp2 = new Entry[size];
-        temp1 = elements;
-        elements = temp2;
+        for (int i = 0; i < size; i++) {
+            temp1[i] = elements[i];
+        }
+        elements = new Entry[size]; // Keep the same size
+        size = 0; // Reset size to 0
 
-        // Puts the datas back in the new array.
-        for(int i = 0; i < elements.length; i++){
+        // Insert the elements back into the array
+        for (int i = 0; i < temp1.length; i++) {
             insert(temp1[i].key, temp1[i].value);
         }
+
+    }
+// TO VIEW BOTH VALUES AND KEYS
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("AdvancedPriorityQueue{");
+//        sb.append("state=").append(state ? "Min heap" : "Max heap");
+//        sb.append(", entries=[");
+//        for (int i = 0; i < size; i++) {
+//            sb.append("{key=").append(elements[i].key).append(", value=").append(elements[i].value).append("}");
+//            if (i < size - 1) {
+//                sb.append(", ");
+//            }
+//        }
+//        sb.append("], size=").append(size);
+//        sb.append('}');
+//        return sb.toString();
+//    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("AdvancedPriorityQueue{");
+        sb.append("state=").append(state ? "Min heap" : "Max heap");
+        sb.append(", keys=[");
+        for (int i = 0; i < size; i++) {
+            sb.append(elements[i].key);
+            if (i < size - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("], size=").append(size);
+        sb.append('}');
+        return sb.toString();
     }
 }
 

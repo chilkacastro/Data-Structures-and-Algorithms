@@ -1,7 +1,7 @@
 
 /**
  * Entry class for PriorityQueue
- * @author Chilka Castro and Christian Davic
+ * @author Chilka Castro and Christian David
  */
 public class Entry {
     String value;
@@ -13,7 +13,7 @@ public class Entry {
      * @param value the value to be stored
      * @param key  the key to be stored
      */
-    public Entry(String value, int key) {
+    public Entry(int key, String value) {
         this.value = value;
         this.key = key;
     }
