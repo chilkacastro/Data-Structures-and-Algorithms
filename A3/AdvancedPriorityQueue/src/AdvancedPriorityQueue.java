@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 /**
  * Advanced Priority Queue class that can toggle between min and max heaps
@@ -24,14 +25,9 @@ public class AdvancedPriorityQueue {
      * Switches the queue between min-heap and max-heap modes.
      */
     public void toggle() {
-        if (state)  // Switches from min and max. Min is true and max is false.
-            state = false;
-        else
-            state = true;
-
+        state = !state;
         if (size > 0)
             fixTree();
-
     }
 
     /**
@@ -40,9 +36,8 @@ public class AdvancedPriorityQueue {
      *  return the entry with the smallest or largest key
      */
     public Entry removeTop() {  //
-        // if no elements in the array, throw an exception
         if (size == 0)
-            throw new RuntimeException("Array is empty");
+            throw new NoSuchElementException("Priority Queue is empty");
 
         Entry removedElement = elements[0];
         elements[0] = elements[size - 1];
@@ -73,28 +68,25 @@ public class AdvancedPriorityQueue {
     private void bubbleDownMinHeap() {
         int i = 0;
         while (true) {
-            int left = 2 * i + 1;
-            int right = 2 * i + 2;
-            int smallest = i;
-
+            int left = getLeftChildIndex(i);
+            int right = getRightChildIndex(i);
+            int min = i;
 
             // Check if left child exists and is smaller
-            if (left < size && elements[left] != null && elements[left].key < elements[smallest].key) {
-                smallest = left;
-            }
+            if (left < size && elements[left] != null && elements[left].getKey() < elements[min].getKey())
+                min = left;
 
             // Check if right child exists and is even smaller
-            if (right < size && elements[right] != null && elements[right].key < elements[smallest].key) {
-                smallest = right;
-            }
+            if (right < size && elements[right] != null && elements[right].getKey() < elements[min].getKey())
+                min = right;
 
             // If i is smallest, heap property is satisfied
-            if (smallest == i)
+            if (min == i)
                 break;
 
             // Swap with the smallest child
-            swap(i, smallest);
-            i = smallest;
+            swap(i, min);
+            i = min;
         }
     }
 
@@ -107,25 +99,20 @@ public class AdvancedPriorityQueue {
         while (true) {
             int left = getLeftChildIndex(i);
             int right = getRightChildIndex(i);
-            int biggest = i;
+            int max = i;
 
             // Check if left child exists and is bigger
-            if (left < size && elements[left] != null && elements[left].key > elements[biggest].key) {
-                biggest = left;
-            }
+            if (left < size && elements[left] != null && elements[left].getKey() > elements[max].getKey())
+                max = left;
 
             // Check if right child exists and is even bigger
-            if (right < size && elements[right] != null && elements[right].key > elements[biggest].key) {
-                biggest = right;
-            }
+            if (right < size && elements[right] != null && elements[right].getKey() > elements[max].getKey())
+                max = right;
 
-            // If i is biggest, heap property is satisfied
-            if (biggest == i)
+            if (max == i)   // if i is largest, heap property is satisfied
                 break;
-
-            // Swap with the biggest child
-            swap(i, biggest);
-            i = biggest;
+            swap(i, max); // swap the current element with the largest child
+            i = max;
         }
     }
 
@@ -141,10 +128,7 @@ public class AdvancedPriorityQueue {
         elements[size] = newElement;
         int i = size;
         size++;
-
         bubbleUp(i);
-
-
         return newElement;
     }
 
@@ -157,9 +141,8 @@ public class AdvancedPriorityQueue {
         if (state) {
             while (i > 0) {
                 int parent = getParentIndex(i);
-                if (elements[i].key >= elements[parent].key) {
+                if (elements[i].getKey() >= elements[parent].getKey())
                     break;
-                }
                 swap(i, parent);
                 i = parent;
             }
@@ -167,27 +150,39 @@ public class AdvancedPriorityQueue {
         // For max heap: bubble up until parent's key is greater than or equal to child's key.
         else {
             while (i > 0) {
-                int parent = (i - 1) / 2;
-                if (elements[i].key <= elements[parent].key) {
+                int parent = getParentIndex(i);
+                if (elements[i].getKey() <= elements[parent].getKey())
                     break;
-                }
                 swap(i, parent);
                 i = parent;
             }
         }
     }
 
-    //Helper method to get the parent index
+    /**
+     * Helper method to get the parent index
+     * @param i the index of the child
+     * @return the index of the parent
+     */
     private int getParentIndex(int i) {
         return (i - 1) / 2;
     }
 
+    /**
+     * Helper method to get the left child index
+     * @param i the index of the parent
+     * @return the index of the left child
+     */
     // Helper method to get the left child index
     private int getLeftChildIndex(int i) {
         return 2 * i + 1;
     }
 
-    // Helper method to get the right child index
+    /**
+     * Helper method to get the right child index
+     * @param i the index of the parent
+     * @return the index of the right child
+     */
     private int getRightChildIndex(int i) {
         return 2 * i + 2;
     }
@@ -209,11 +204,13 @@ public class AdvancedPriorityQueue {
      * @return the entry that was removed
      */
     public Entry remove(Entry e) {
+        if (e == null)
+            throw new IllegalArgumentException("Entry is null");
         if (size == 0)
-            throw new NullPointerException("Array is empty because of size: " + size());
+            throw new NoSuchElementException("Priority Queue is empty.");
 
-        swap(search(e.key), size); // swap the element to be removed with the last element
-        elements[size] = null;
+        swap(search(e.getKey()), size - 1); // swap the element to be removed with the last element
+        elements[size - 1] = null;
         size--;
 
         if (size > DEFAULT_CAPACITY && size < elements.length / 4)
@@ -231,9 +228,9 @@ public class AdvancedPriorityQueue {
      * @return the old key
      */
     public int replaceKey(Entry e, int k) {
-        int index = search(e.key);
-        int oldKey = elements[index].key;
-        elements[index].key = k;
+        int index = search(e.getKey());
+        int oldKey = elements[index].getKey();
+        elements[index].setKey(k);
         fixTree();
         return oldKey;
     }
@@ -245,9 +242,9 @@ public class AdvancedPriorityQueue {
      * @return the old value of the entry
      */
     public String replaceValue(Entry e, String value) {
-        int index = search(e.key);
-        String oldValue = elements[index].value;
-        elements[index].value = value;
+        int index = search(e.getKey());
+        String oldValue = elements[index].getValue();
+        elements[index].setValue(value);
         return oldValue;
     }
 
@@ -284,15 +281,10 @@ public class AdvancedPriorityQueue {
      * @return the n-th entry in the priority queue
      */
     public Entry peekAt(int n) {
-        if (n < 0 || n >= size) {
+        if (n < 0 || n >= size)
             throw new IndexOutOfBoundsException("Index out of bounds");
-        }
-        if (n == 0) {
-            return top();
-        }
-        else {
-            return elements[n];
-        }
+
+        return elements[n];
     }
 
     /**
@@ -303,40 +295,48 @@ public class AdvancedPriorityQueue {
      */
     public void merge(AdvancedPriorityQueue otherAPQ) {
         for (int i = 0; i < otherAPQ.size; i++) {
-            insert(otherAPQ.elements[i].key, otherAPQ.elements[i].value);
+            insert(otherAPQ.elements[i].getKey(), otherAPQ.elements[i].getValue());
         }
     }
 
-    //Helper method for searching key and values.
-    private int search(int i){
-        int index = 0;
-        while(i != elements[index].key) {
-            index++;
+    /**
+     * Helper method for searching a key in the array.
+     * Throws an exception if the key is not found.
+     */
+    private int search(int key) {
+        for (int index = 0; index < size; index++) {
+            if (elements[index].getKey() == key) {
+                return index;
+            }
         }
-        return index;
+        throw new IllegalArgumentException("Key " + key + " not found in the priority queue.");
+
     }
 
-    // Helper method
+    /**
+     * Helper method to swap two elements in the array.
+     * @param i the index of the first entry
+     * @param j the index of the second entry
+     */
     private void swap(int i, int j) {
         Entry temp = elements[j];
         elements[j] = elements[i];
         elements[i] = temp;
     }
 
-    //This is for dynamic sizing of the PQueue
+    /**
+     * Helper method to double the size of the array.
+     */
     private void doubleSize() {
         Entry[] temp = new Entry[elements.length * 2];
-
         for(int i = 0; i < elements.length; i++) {
             temp[i] = elements[i];
         }
-
         elements = temp;
     }
 
     private void halfSize() {
         Entry[] temp = new Entry[elements.length / 2];
-
         for(int i = 0; i < temp.length; i++) {
             temp[i] = elements[i];
         }
@@ -345,16 +345,16 @@ public class AdvancedPriorityQueue {
 
     // A helper method to help in toggling the array from min and max.
     private void fixTree() {
-        Entry[] temp1 = new Entry[size];
+        Entry[] temp = new Entry[size];
         for (int i = 0; i < size; i++) {
-            temp1[i] = elements[i];
+            temp[i] = elements[i];
         }
         elements = new Entry[size]; // Keep the same size
         size = 0; // Reset size to 0
 
         // Insert the elements back into the array
-        for (int i = 0; i < temp1.length; i++) {
-            insert(temp1[i].key, temp1[i].value);
+        for (int i = 0; i < temp.length; i++) {
+            insert(temp[i].getKey(), temp[i].getValue());
         }
 
     }
@@ -371,7 +371,7 @@ public class AdvancedPriorityQueue {
                 if (!first) {
                     sb.append(", ");
                 }
-                sb.append("{key=").append(elements[i].key).append(", value=").append(elements[i].value).append("}");
+                sb.append("{key=").append(elements[i].getKey()).append(", value=").append(elements[i].getValue()).append("}");
                 first = false;
             }
         }

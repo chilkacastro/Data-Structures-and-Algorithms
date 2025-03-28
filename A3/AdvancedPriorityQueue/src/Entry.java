@@ -4,9 +4,9 @@
  * @author Chilka Castro and Christian David
  */
 public class Entry {
-    String value;
-    int key;
-    int index;
+    private String value;
+    private int key;
+    private int index;
 
     /**
      * Constructor for Entry
@@ -17,12 +17,25 @@ public class Entry {
         this.value = value;
         this.key = key;
     }
-
-    /**
-     * Change the index of the Entry
-     * @param i
-     */
-    public void changeIndex(int i) {
-        this.index = i;
+//
+//    /**
+//     * Change the index of the Entry
+//     * @param i
+//     */
+//    public void changeIndex(int i) {
+//        this.index = i;
+//    }
+    // Getters and Setters
+    public String getValue() {
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+    public int getKey() {
+        return key;
+    }
+    public void setKey(int key) {
+        this.key = key;
     }
 }
