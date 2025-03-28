@@ -39,7 +39,7 @@ public class AdvancedPriorityQueue {
             throw new NoSuchElementException("Priority Queue is empty");
 
         Entry removedElement = elements[0];
-        elements[0] = elements[size - 1];
+        elements[0] = elements[size - 1]; 
         elements[size - 1] = null;
         size--;
 
@@ -50,70 +50,7 @@ public class AdvancedPriorityQueue {
         return removedElement;
     }
 
-    /**
-     * Helper method to bubble down the array
-     * This method is used to maintain the heap property after removing the top element
-     */
-    private void bubbleDown() {
-        if (state)
-            bubbleDownMinHeap();
-        else
-            bubbleDownMaxHeap();
-    }
 
-    /**
-     * Helper method to bubble down the array for min heap
-     */
-    private void bubbleDownMinHeap() {
-        int i = 0;
-        while (true) {
-            int left = getLeftChildIndex(i);
-            int right = getRightChildIndex(i);
-            int min = i;
-
-            // Check if left child exists and is smaller
-            if (left < size && elements[left] != null && elements[left].getKey() < elements[min].getKey())
-                min = left;
-
-            // Check if right child exists and is even smaller
-            if (right < size && elements[right] != null && elements[right].getKey() < elements[min].getKey())
-                min = right;
-
-            // If i is smallest, heap property is satisfied
-            if (min == i)
-                break;
-
-            // Swap with the smallest child
-            swap(i, min);
-            i = min;
-        }
-    }
-
-    /**
-     * Helper method to bubble down the array for max heap -> so the largest element is at the top
-     */
-    private void bubbleDownMaxHeap() {
-        int i = 0;
-
-        while (true) {
-            int left = getLeftChildIndex(i);
-            int right = getRightChildIndex(i);
-            int max = i;
-
-            // Check if left child exists and is bigger
-            if (left < size && elements[left] != null && elements[left].getKey() > elements[max].getKey())
-                max = left;
-
-            // Check if right child exists and is even bigger
-            if (right < size && elements[right] != null && elements[right].getKey() > elements[max].getKey())
-                max = right;
-
-            if (max == i)   // if i is largest, heap property is satisfied
-                break;
-            swap(i, max); // swap the current element with the largest child
-            i = max;
-        }
-    }
 
     /** Adds a new entry with key k and value v to the queue,
      * returning the resulting entry object.
@@ -130,34 +67,6 @@ public class AdvancedPriorityQueue {
         bubbleUp(i);
         return newElement;
     }
-
-    /**
-     * Helper method to bubble up the array
-     * This method is used to maintain the heap property after inserting a new element
-     */
-    public void bubbleUp(int i) {
-        // For min heap: bubble up until parent's key is less than or equal to child's key.
-        if (state) {
-            while (i > 0) {
-                int parent = getParentIndex(i);
-                if (elements[i].getKey() >= elements[parent].getKey())
-                    break;
-                swap(i, parent);
-                i = parent;
-            }
-        }
-        // For max heap: bubble up until parent's key is greater than or equal to child's key.
-        else {
-            while (i > 0) {
-                int parent = getParentIndex(i);
-                if (elements[i].getKey() <= elements[parent].getKey())
-                    break;
-                swap(i, parent);
-                i = parent;
-            }
-        }
-    }
-
 
     /**
      * Retrieves the entry with the smallest or largest key
@@ -227,7 +136,6 @@ public class AdvancedPriorityQueue {
     public String state() {
         return state ? "Min heap" : "Max heap";
     }
-
 
     /**
      * Checks if the queue is empty, returning true if it is.
@@ -300,6 +208,97 @@ public class AdvancedPriorityQueue {
         return 2 * i + 2;
     }
 
+    /**
+     * Helper method to bubble down the array
+     * This method is used to maintain the heap property after removing the top element
+     */
+    private void bubbleDown() {
+        if (state)
+            bubbleDownMinHeap();
+        else
+            bubbleDownMaxHeap();
+    }
+
+    /**
+     * Helper method to bubble down the array for min heap
+     */
+    private void bubbleDownMinHeap() {
+        int i = 0;
+        while (true) {
+            int left = getLeftChildIndex(i);
+            int right = getRightChildIndex(i);
+            int min = i;
+
+            // Check if left child exists and is smaller
+            if (left < size && elements[left] != null && elements[left].getKey() < elements[min].getKey())
+                min = left;
+
+            // Check if right child exists and is even smaller
+            if (right < size && elements[right] != null && elements[right].getKey() < elements[min].getKey())
+                min = right;
+
+            // If i is smallest, heap property is satisfied
+            if (min == i)
+                break;
+
+            // Swap with the smallest child
+            swap(i, min);
+            i = min;
+        }
+    }
+
+    /**
+     * Helper method to bubble down the array for max heap -> so the largest element is at the top
+     */
+    private void bubbleDownMaxHeap() {
+        int i = 0;
+
+        while (true) {
+            int left = getLeftChildIndex(i);
+            int right = getRightChildIndex(i);
+            int max = i;
+
+            // Check if left child exists and is bigger
+            if (left < size && elements[left] != null && elements[left].getKey() > elements[max].getKey())
+                max = left;
+
+            // Check if right child exists and is even bigger
+            if (right < size && elements[right] != null && elements[right].getKey() > elements[max].getKey())
+                max = right;
+
+            if (max == i)   // if i is largest, heap property is satisfied
+                break;
+            swap(i, max); // swap the current element with the largest child
+            i = max;
+        }
+    }
+
+    /**
+     * Helper method to bubble up the array
+     * This method is used to maintain the heap property after inserting a new element
+     */
+    public void bubbleUp(int i) {
+        // For min heap: bubble up until parent's key is less than or equal to child's key.
+        if (state) {
+            while (i > 0) {
+                int parent = getParentIndex(i);
+                if (elements[i].getKey() >= elements[parent].getKey())
+                    break;
+                swap(i, parent);
+                i = parent;
+            }
+        }
+        // For max heap: bubble up until parent's key is greater than or equal to child's key.
+        else {
+            while (i > 0) {
+                int parent = getParentIndex(i);
+                if (elements[i].getKey() <= elements[parent].getKey())
+                    break;
+                swap(i, parent);
+                i = parent;
+            }
+        }
+    }
 
     /**
      * Helper method for searching a key in the array.
@@ -312,7 +311,6 @@ public class AdvancedPriorityQueue {
             }
         }
         throw new IllegalArgumentException("Key " + key + " not found in the priority queue.");
-
     }
 
     /**
