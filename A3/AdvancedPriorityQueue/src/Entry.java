@@ -38,4 +38,13 @@ public class Entry {
     public void setKey(int key) {
         this.key = key;
     }
+
+    /**
+     * Print the Entry
+     * @return String representation of the Entry
+     */
+    @Override
+    public String toString() {
+        return "(" + key + ", " + value + ")";
+    }
 }

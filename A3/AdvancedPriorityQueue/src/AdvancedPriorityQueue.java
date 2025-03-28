@@ -11,7 +11,6 @@ public class AdvancedPriorityQueue {
     private int size;  // how many elements are in the array Entry
     private static final int DEFAULT_CAPACITY = 10;
 
-
     /**
      * Constructor for AdvancedPriorityQueue
      */
@@ -159,33 +158,6 @@ public class AdvancedPriorityQueue {
         }
     }
 
-    /**
-     * Helper method to get the parent index
-     * @param i the index of the child
-     * @return the index of the parent
-     */
-    private int getParentIndex(int i) {
-        return (i - 1) / 2;
-    }
-
-    /**
-     * Helper method to get the left child index
-     * @param i the index of the parent
-     * @return the index of the left child
-     */
-    // Helper method to get the left child index
-    private int getLeftChildIndex(int i) {
-        return 2 * i + 1;
-    }
-
-    /**
-     * Helper method to get the right child index
-     * @param i the index of the parent
-     * @return the index of the right child
-     */
-    private int getRightChildIndex(int i) {
-        return 2 * i + 2;
-    }
 
     /**
      * Retrieves the entry with the smallest or largest key
@@ -299,6 +271,36 @@ public class AdvancedPriorityQueue {
         }
     }
 
+    // --------------------------- Helper methods ---------------------------
+    /**
+     * Helper method to get the parent index
+     * @param i the index of the child
+     * @return the index of the parent
+     */
+    private int getParentIndex(int i) {
+        return (i - 1) / 2;
+    }
+
+    /**
+     * Helper method to get the left child index
+     * @param i the index of the parent
+     * @return the index of the left child
+     */
+    // Helper method to get the left child index
+    private int getLeftChildIndex(int i) {
+        return 2 * i + 1;
+    }
+
+    /**
+     * Helper method to get the right child index
+     * @param i the index of the parent
+     * @return the index of the right child
+     */
+    private int getRightChildIndex(int i) {
+        return 2 * i + 2;
+    }
+
+
     /**
      * Helper method for searching a key in the array.
      * Throws an exception if the key is not found.
@@ -335,6 +337,9 @@ public class AdvancedPriorityQueue {
         elements = temp;
     }
 
+    /**
+     * Helper method to half the size of the array.
+     */
     private void halfSize() {
         Entry[] temp = new Entry[elements.length / 2];
         for(int i = 0; i < temp.length; i++) {
@@ -342,8 +347,10 @@ public class AdvancedPriorityQueue {
         }
         elements = temp;
     }
-
-    // A helper method to help in toggling the array from min and max.
+    /**
+     * Helper method to fix the tree after toggling the state.
+     * This method is used to maintain the heap property after toggling the state
+     */
     private void fixTree() {
         Entry[] temp = new Entry[size];
         for (int i = 0; i < size; i++) {
@@ -356,9 +363,12 @@ public class AdvancedPriorityQueue {
         for (int i = 0; i < temp.length; i++) {
             insert(temp[i].getKey(), temp[i].getValue());
         }
-
     }
 
+    /**
+     * Returns a string representation of the priority queue.
+     * @return a string representation of the priority queue
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

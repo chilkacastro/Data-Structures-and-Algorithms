@@ -1,44 +1,237 @@
 public class Main {
-    public static void main(String[] args)
-    {
-        AdvancedPriorityQueue pq = new AdvancedPriorityQueue();
-        System.out.println(pq.toString());
-        Entry e1 = pq.insert(5, "five");
-        Entry e2 = pq.insert(3, "three");
-        Entry e3= pq.insert(2, "two");
-        Entry e4 = pq.insert(20, "four");
-        Entry e5 = pq.insert(1, "one");
-        pq.toggle();
-        System.out.println(pq.toString());
 
-//        pq.toggle();
-//        System.out.println(pq.toString());
-////       System.out.println("KEY OF REMOVED TOP: " + pq.removeTop().key);
+    /**
+     * Helper method to find an Entry by key in the APQ.
+     * Returns null if not found.
+     */
+    private static Entry findEntryByKey(AdvancedPriorityQueue apq, int key) {
+        for (int i = 0; i < apq.size(); i++) {
+            Entry e = apq.peekAt(i);
+            if (e.getKey() == key) {
+                return e;
+            }
+        }
+        return null;
+    }
 
-////        System.out.println("KEY OF REMOVED ENTRY: " + pq.remove(newEntry).key);
-        // TRYING REPLACE KEY WITH AN ENTRY
-        System.out.println("KEY OF REPLACED ENTRY: " + pq.replaceKey(e2, 29));
-        System.out.println(pq.toString());
-//        System.out.println(newEntry.key + " " +  newEntry.value);
-//        System.out.println("KEY OF REMOVED ENTRY: " + pq.replaceValue(newEntry2, "newValue"));
-//        System.out.println(pq.toString());
-////        pq.toggle();
-////        System.out.println(pq.top().key + " " + pq.top().value);
-////        System.out.println(pq.toString());
-        pq.toggle();
-        System.out.println(pq.toString());
-//        System.out.println("Key at index: " + pq.peekAt(2).key + ", " + "Value at index: " + pq.peekAt(2).value);
-//
-////        System.out.println(pq.removeTop().key);
-//        AdvancedPriorityQueue pq2 = new AdvancedPriorityQueue();
-//        pq2.insert(43, "fourty-three");
-//        pq2.insert(12, "twelve");
-//        pq2.insert(52, "fifty-two");
-//        pq2.insert(8, "eight");
+    public static void main(String[] args) {
+        System.out.println("Advanced Priority Queue Tests\n");
 
-//        pq.merge(pq2);
-//        pq.toggle();
-//        System.out.println("Merged Priority Queue: " + pq.toString());
-//        System.out.println("Merged Priority Queue: " + pq2.toString());
+        // Create a new APQ (min-heap by default)
+        AdvancedPriorityQueue apq = new AdvancedPriorityQueue();
+        System.out.println("Created a new APQ.");
+        System.out.println("Queue: " + apq + "\n");
+
+        // Insert several items
+        System.out.println("Inserting items: (10, A), (5, B), (20, C), (15, D), (7, E).");
+        apq.insert(10, "A");
+        apq.insert(5, "B");
+        apq.insert(20, "C");
+        apq.insert(15, "D");
+        apq.insert(7, "E");
+        System.out.println("Queue: " + apq + "\n");
+
+        // top() should return the smallest key (min-heap)
+        System.out.println("Top element (min-heap): " + apq.top() + "\n");
+
+        // removeTop() should remove the smallest element
+        System.out.println("Removing top element: " + apq.removeTop());
+        System.out.println("Queue after removal: " + apq + "\n");
+
+        // Remove a specific entry (remove entry with key=15)
+        System.out.println("Removing entry with key=15.");
+        Entry e15 = findEntryByKey(apq, 15);
+        if (e15 != null) {
+            apq.remove(e15);
+            System.out.println("Entry with key=15 removed.");
+        } else {
+            System.out.println("Entry with key=15 not found.");
+        }
+        System.out.println("Queue: " + apq + "\n");
+
+        // Insert additional items to force expansion
+        System.out.println("Inserting extra items to force double size.");
+        for (int i = 1; i <= 30; i++) {
+            apq.insert(i, "Extra" + i);
+        }
+        System.out.println("Queue after extra inserts: " + apq + "\n");
+
+        // Increase an existing key using replaceKey (change key 20 to 35)
+        System.out.println("Increasing key using replaceKey (change 20 -> 35).");
+        Entry e20 = findEntryByKey(apq, 20);
+        if (e20 != null) {
+            int oldKey = apq.replaceKey(e20, 35);
+            System.out.println("Replaced key " + oldKey + " with " + e20.getKey());
+        } else {
+            System.out.println("Entry with key=20 not found.");
+        }
+        System.out.println("Queue: " + apq + "\n");
+
+        // Decrease an existing key using replaceKey (try changing key 10 to 2)
+        System.out.println("Decreasing key using replaceKey (change 10 -> 2).");
+        Entry e10 = findEntryByKey(apq, 10);
+        if (e10 != null) {
+            int oldKey = apq.replaceKey(e10, 2);
+            System.out.println("Replaced key " + oldKey + " with " + e10.getKey());
+        } else {
+            System.out.println("Entry with key=10 not found.");
+        }
+        System.out.println("Queue: " + apq + "\n");
+
+        // Change the value for an entry using replaceValue (change value for key=7 to "Z")
+        System.out.println("Changing value for entry with key=7 to 'Z'.");
+        Entry e7 = findEntryByKey(apq, 7);
+        if (e7 != null) {
+            String oldVal = apq.replaceValue(e7, "Z");
+            System.out.println("Replaced value '" + oldVal + "' with '" + e7.getValue() + "'");
+        } else {
+            System.out.println("Entry with key=7 not found.");
+        }
+        System.out.println("Queue: " + apq + "\n");
+
+        // peekAt() with a valid index
+        System.out.println("peekAt(0) returns: " + apq.peekAt(0) + "\n");
+
+        // peekAt() with an invalid index (expect an exception)
+        System.out.println("Calling peekAt with an invalid index:");
+        try {
+            apq.peekAt(apq.size() + 1);
+        } catch (Exception ex) {
+            System.out.println("Caught exception: " + ex.getMessage());
+        }
+        System.out.println();
+
+        // Toggle to max-heap mode
+        System.out.println("Toggling to max-heap mode.");
+        apq.toggle();
+        System.out.println("Current state: " + apq.state());
+        System.out.println("Queue: " + apq + "\n");
+
+        // In max-heap mode, removeTop() should remove the largest element
+        System.out.println("Removing top element in max-heap: " + apq.removeTop());
+        System.out.println("Queue: " + apq + "\n");
+
+        // Toggle back to min-heap mode
+        System.out.println("Toggling back to min-heap mode.");
+        apq.toggle();
+        System.out.println("Current state: " + apq.state());
+        System.out.println("Queue: " + apq + "\n");
+
+        // Merge with a second APQ containing (50, X) and (0, Y)
+        System.out.println("Merging with a second APQ containing (50, X) and (0, Y).");
+        AdvancedPriorityQueue apq2 = new AdvancedPriorityQueue();
+        apq2.insert(50, "X");
+        apq2.insert(0, "Y");
+        apq.merge(apq2);
+        System.out.println("Queue after merge: " + apq + "\n");
+
+        // Remove all entries one by one
+        System.out.println("Removing all entries one by one.");
+        while (!apq.isEmpty()) {
+            System.out.println("Removed: " + apq.removeTop());
+        }
+        System.out.println("Queue now: " + apq);
+        System.out.println("isEmpty()? " + apq.isEmpty() + "\n");
+
+        // Attempt removeTop() on an empty queue (expect exception)
+        System.out.println("Attempting to removeTop() from an empty queue:");
+        try {
+            apq.removeTop();
+        } catch (Exception ex) {
+            System.out.println("Caught expected exception: " + ex.getMessage());
+        }
+        System.out.println();
+
+        // Toggle on an empty queue (should work without error)
+        System.out.println("Toggling on an empty queue.");
+        apq.toggle();
+        System.out.println("Current state: " + apq.state() + "\n");
+
+        // Insert into the empty queue
+        System.out.println("Inserting (10, Q) into the empty APQ.");
+        apq.insert(10, "Q");
+        System.out.println("Queue: " + apq + "\n");
+
+        // Insert additional items to double size
+        System.out.println("Inserting items (11, R11) to (20, R20) to double size.");
+        for (int i = 11; i <= 20; i++) {
+            apq.insert(i, "R" + i);
+        }
+        System.out.println("Queue after expansion: " + apq + "\n");
+        System.out.println("Current size: " + apq.size());
+
+        // Remove a specific entry (attempt to remove entry with key=14)
+        System.out.println("Removing entry with key=14 (if present).");
+        Entry e14 = findEntryByKey(apq, 14);
+        if (e14 != null) {
+            apq.remove(e14);
+            System.out.println("Entry with key=14 removed.");
+        } else {
+            System.out.println("Entry with key=14 not found.");
+        }
+        System.out.println("Queue: " + apq + "\n");
+
+        // Change an entry's key (replace key 12 with 6)
+        System.out.println("Changing key for entry with key=12 to 6.");
+        Entry e12 = findEntryByKey(apq, 12);
+        if (e12 != null) {
+            int oldKey = apq.replaceKey(e12, 6);
+            System.out.println("Replaced key " + oldKey + " with " + e12.getKey());
+        } else {
+            System.out.println("Entry with key=12 not found.");
+        }
+        System.out.println("Queue: " + apq + "\n");
+
+        // Change an entry's value (replace value for key=11 with 'Updated')
+        System.out.println("Changing value for entry with key=11 to 'Updated'.");
+        Entry e11 = findEntryByKey(apq, 11);
+        if (e11 != null) {
+            String oldVal = apq.replaceValue(e11, "Updated");
+            System.out.println("Replaced value '" + oldVal + "' with '" + e11.getValue() + "'");
+        } else {
+            System.out.println("Entry with key=11 not found.");
+        }
+        System.out.println("Queue: " + apq + "\n");
+
+        // Check size() and isEmpty()
+        System.out.println("Current size: " + apq.size() + ", isEmpty(): " + apq.isEmpty() + "\n");
+
+        // Remove all remaining entries
+        System.out.println("Removing all remaining entries.");
+        while (!apq.isEmpty()) {
+            System.out.println("Removed: " + apq.removeTop());
+        }
+        System.out.println("Queue empty? " + apq.isEmpty() + "\n");
+
+        // Insert items and merge with another APQ
+        System.out.println("Inserting items into a new APQ and merging with another APQ.");
+        AdvancedPriorityQueue apq3 = new AdvancedPriorityQueue();
+        apq3.insert(30, "M1");
+        apq3.insert(25, "M2");
+        AdvancedPriorityQueue apq4 = new AdvancedPriorityQueue();
+        apq4.insert(5, "N1");
+        apq4.insert(40, "N2");
+        apq3.merge(apq4);
+        System.out.println("Merged queue: " + apq3 + "\n");
+
+        // Toggle merged APQ to max-heap, then remove the top element
+        System.out.println("Toggling merged queue to max-heap.");
+        apq3.toggle();
+        System.out.println("Current state: " + apq3.state());
+        System.out.println("Removed top (max-heap): " + apq3.removeTop());
+        System.out.println("Queue: " + apq3 + "\n");
+
+        // Toggle back to min-heap
+        System.out.println("Toggling back to min-heap.");
+        apq3.toggle();
+        System.out.println("Current state: " + apq3.state());
+        System.out.println("Queue: " + apq3 + "\n");
+
+        // Final operation: Insert one more item and remove top to verify stability
+        System.out.println("Inserting (99, Final) and then removing top element.");
+        apq3.insert(99, "Final");
+        System.out.println("Queue: " + apq3);
+        System.out.println("Removed top: " + apq3.removeTop());
+        System.out.println("Final state: " + apq3 + "\n");
     }
 }
