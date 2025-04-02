@@ -1,0 +1,43 @@
+
+/**
+ * Entry class for PriorityQueue
+ * @author Chilka Castro and Christian David
+ */
+public class Entry {
+    private String value;
+    private int key;
+    private int index;
+
+    /**
+     * Constructor for Entry
+     * @param value the value to be stored
+     * @param key  the key to be stored
+     */
+    public Entry(int key, String value) {
+        this.value = value;
+        this.key = key;
+    }
+
+    // Getters and Setters
+    public String getValue() {
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+    public int getKey() {
+        return key;
+    }
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    /**
+     * Print the Entry
+     * @return String representation of the Entry
+     */
+    @Override
+    public String toString() {
+        return "(" + key + ", " + value + ")";
+    }
+}
