@@ -4,7 +4,7 @@ public class TesterForOneMethod {
         apq.toggle();
         apq.insert(1, "A");
         apq.insert(10, "B");
-        apq.insert(5, "C");
+        Entry e1 = apq.insert(5, "C");
         apq.insert(20, "D");
         apq.insert(15, "E");
         apq.insert(7, "F");
@@ -16,6 +16,13 @@ public class TesterForOneMethod {
         apq.printEntries();   // readable than toString method
         apq.toggle();
         System.out.println("Top: " + apq.top());
+        System.out.println("Queue: " + apq.peekAt(1));
+        apq.printEntries();
+        apq.toggle();
+        System.out.println(apq.replaceKey(e1, 9));
+        apq.printEntries();
+        apq.remove(e1);
+        apq.printEntries();
 //        apq.toggle();
         // System.out.println("Queue: " + apq.toString());
 

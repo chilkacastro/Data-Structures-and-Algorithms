@@ -210,8 +210,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Returns the n-th entry in the priority queue (e.g., the n-th smallest key in
-     * a min-
-     * heap or the n-th largest key in a max-heap) without removing it. Throws an
+     * a min-heap or the n-th largest key in a max-heap) without removing it. Throws an
      * error if n is out of
      * bounds.
      * 
@@ -222,17 +221,24 @@ public class AdvancedPriorityQueue {
         if (n < 0 || n >= size)
             throw new IndexOutOfBoundsException("Index out of bounds");
 
-        Entry[] temp = new Entry[this.size];
-        temp = elements;
+        // Make a backup of the current heap state
+        Entry[] backupElements = Arrays.copyOf(elements, elements.length);
+        int backupSize = size;
 
+        // Remove the top element n times to reach the nth element.
         for (int i = 0; i < n; i++) {
             removeTop();
         }
 
+        // The nth element is now at the top.
         Entry result = elements[0];
-        elements = temp;
+
+        // Restore the original heap state.
+        elements = backupElements;
+        size = backupSize;
 
         return result;
+
     }
 
     /**
