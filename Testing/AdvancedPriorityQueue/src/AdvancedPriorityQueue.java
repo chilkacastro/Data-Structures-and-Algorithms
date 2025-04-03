@@ -105,21 +105,24 @@ public class AdvancedPriorityQueue {
             if (indexToRemove > 0) {  // if the element is not at the root, compare it with its parent.
                 int parentIndex = getParentIndex(indexToRemove);
                 // For a min-heap, if the moved element is smaller than its parent, it should bubble up.
-                // For a max-heap, if it is larger than its parent, it should bubble up.
                 if (state) { // min-heap
                     if (elements[indexToRemove].getKey() < elements[parentIndex].getKey()) {
                         bubbleUp(indexToRemove);
                     } else {
                         bubbleDown(indexToRemove);
                     }
-                } else { // max-heap
+                }
+                // For a max-heap, if it is larger than its parent, it should bubble up.
+
+                else { // max-heap
                     if (elements[indexToRemove].getKey() > elements[parentIndex].getKey()) {
                         bubbleUp(indexToRemove);
                     } else {
                         bubbleDown(indexToRemove);
                     }
                 }
-            } else {
+            }
+            else {
                 bubbleDown(0); // if the element is now at the root (index 0), only bubble down is needed
             }
         }
@@ -136,26 +139,31 @@ public class AdvancedPriorityQueue {
      * Updates the key of entry e to k and returns the old key.
      *
      * @param e the entry to be updated
-     * @param k the new key
+     * @param newKey the new key
      * @return the old key
      */
-    public int replaceKey(Entry e, int k) {
+    public int replaceKey(Entry e, int newKey) {
         int index = search(e.getKey());
         int oldKey = elements[index].getKey();
-        elements[index].setKey(k);
-        if (state) { // for min-heap
-            if (k < oldKey) {
-                bubbleUp(index);
-            } else if (k > oldKey) {
-                bubbleDown(index);
+        elements[index].setKey(newKey);
+
+        if (state) {                // for min-heap
+            if (newKey < oldKey) {
+                bubbleUp(index);    // if the new key is smaller, bubble up
             }
-        } else {  // for max-heap
-            if (k > oldKey) {
-                bubbleUp(index);
-            } else if (k < oldKey) {
-                bubbleDown(index);
+            if (newKey > oldKey) {
+                bubbleDown(index);  // if the new key is larger, bubble down
             }
         }
+        else {  // for max-heap
+            if (newKey > oldKey) {
+                bubbleUp(index);    // if the new key is larger, bubble up
+            }
+            if (newKey < oldKey) {
+                bubbleDown(index);  // if the new key is smaller, bubble down
+            }
+        }
+
         return oldKey;
     }
 
@@ -353,19 +361,8 @@ public class AdvancedPriorityQueue {
      * This method is used to maintain the heap property after toggling the state
      */
     private void buildHeap() {
-//        Entry[] temp = new Entry[size];
-//        for (int i = 0; i < size; i++) {
-//            temp[i] = elements[i];
-//        }
-//        elements = new Entry[size]; // Keep the same size
-//        size = 0; // Reset size to 0
-//
-//        // Insert the elements back into the array
-//        for (int i = 0; i < temp.length; i++) {
-//            insert(temp[i].getKey(), temp[i].getValue());
-//        }
         for (int i = getParentIndex(size - 1); i >= 0; i--) {
-            bubbleDown(i);
+            bubbleDown(i);;
         }
     }
 
@@ -376,22 +373,39 @@ public class AdvancedPriorityQueue {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("AdvancedPriorityQueue{");
-        sb.append("state=").append(state ? "Min heap" : "Max heap");
-        sb.append(", entries=[");
+        sb.append("Priority Queue: State: ").append(state ? "Min heap" : "Max heap")
+                .append(", Size: ").append(size).append(", Entries: [");
         boolean first = true;
         for (int i = 0; i < elements.length; i++) {
             if (elements[i] != null) {
                 if (!first) {
                     sb.append(", ");
                 }
-                sb.append("{key=").append(elements[i].getKey()).append(", value=").append(elements[i].getValue()).append("}");
+                sb.append("{key=").append(elements[i].getKey())
+                        .append(", value=").append(elements[i].getValue()).append("}");
                 first = false;
             }
         }
-        sb.append("], size=").append(size);
-        sb.append('}');
+        sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * Prints the entries in the priority queue.
+     */
+    public void printEntries() {
+        System.out.print("State: " + (state ? "Min heap" : "Max heap") + ", Size: " + size + ", Entries: [");
+        boolean first = true;
+        for (int i = 0; i < elements.length; i++) {
+            if (elements[i] != null) {
+                if (!first) {
+                    System.out.print(", ");
+                }
+                System.out.print(elements[i].getKey() + "=" + elements[i].getValue());
+                first = false;
+            }
+        }
+        System.out.println("]");
     }
 }
 
