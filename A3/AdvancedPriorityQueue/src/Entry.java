@@ -17,14 +17,7 @@ public class Entry {
         this.value = value;
         this.key = key;
     }
-//
-//    /**
-//     * Change the index of the Entry
-//     * @param i
-//     */
-//    public void changeIndex(int i) {
-//        this.index = i;
-//    }
+
     // Getters and Setters
     public String getValue() {
         return value;
