@@ -3,19 +3,20 @@ import java.util.NoSuchElementException;
 
 /**
  * Advanced Priority Queue class that can toggle between min and max heaps
+ * 
  * @author Chilka Castro and Christian David
  */
 public class AdvancedPriorityQueue {
     private boolean state;
-    private Entry[] elements;  // array of Entry objects
-    private int size;  // how many elements are in the array Entry
+    private Entry[] elements; // array of Entry objects
+    private int size; // how many elements are in the array Entry
     private static final int DEFAULT_CAPACITY = 10;
 
     /**
      * Constructor for AdvancedPriorityQueue
      */
     public AdvancedPriorityQueue() {
-        this.state = true;  // starts in min heap mode
+        this.state = true; // starts in min heap mode
         this.elements = new Entry[DEFAULT_CAPACITY];
         this.size = 0;
     }
@@ -30,16 +31,16 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     *  Removes and returns the entry (key-value pair) with the smallest or largest
-     *  key, depending on the current mode (Min or Max).
-     *  return the entry with the smallest or largest key
+     * Removes and returns the entry (key-value pair) with the smallest or largest
+     * key, depending on the current mode (Min or Max).
+     * return the entry with the smallest or largest key
      */
-    public Entry removeTop() {  //
+    public Entry removeTop() { //
         if (size == 0)
             throw new NoSuchElementException("Priority Queue is empty");
 
         Entry removedElement = elements[0];
-        elements[0] = elements[size - 1]; 
+        elements[0] = elements[size - 1];
         elements[size - 1] = null;
         size--;
 
@@ -50,9 +51,8 @@ public class AdvancedPriorityQueue {
         return removedElement;
     }
 
-
-
-    /** Adds a new entry with key k and value v to the queue,
+    /**
+     * Adds a new entry with key k and value v to the queue,
      * returning the resulting entry object.
      * return the entry object that was added to the queue
      */
@@ -118,7 +118,8 @@ public class AdvancedPriorityQueue {
 
     /**
      * Updates the value of entry e to v and returns the old value.
-     * @param e the entry to be updated
+     * 
+     * @param e     the entry to be updated
      * @param value the new value to update
      * @return the old value of the entry
      */
@@ -131,6 +132,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Returns the current mode of the queue (Min or Max).
+     * 
      * @return the current mode of the queue
      */
     public String state() {
@@ -139,6 +141,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Checks if the queue is empty, returning true if it is.
+     * 
      * @return true if the queue is empty, false otherwise
      */
     public boolean isEmpty() {
@@ -147,6 +150,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Returns the total number of entries in the queue.
+     * 
      * @return the number of entries in the queue
      */
     public int size() {
@@ -154,9 +158,12 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Returns the n-th entry in the priority queue (e.g., the n-th smallest key in a min-
-     * heap or the n-th largest key in a max-heap) without removing it. Throws an error if n is out of
+     * Returns the n-th entry in the priority queue (e.g., the n-th smallest key in
+     * a min-
+     * heap or the n-th largest key in a max-heap) without removing it. Throws an
+     * error if n is out of
      * bounds.
+     * 
      * @param n the nth entry to peek at
      * @return the n-th entry in the priority queue
      */
@@ -164,13 +171,25 @@ public class AdvancedPriorityQueue {
         if (n < 0 || n >= size)
             throw new IndexOutOfBoundsException("Index out of bounds");
 
-        return elements[n];
+        Entry[] temp = new Entry[this.size];
+
+        temp = elements;
+        for (int i = 0; i < n; i++) {
+            removeTop();
+        }
+
+        Entry result = elements[0];
+        elements = temp;
+
+        return result;
     }
 
     /**
      * Merges the current priority queue with another APQ, combining all
-     * entries into a single APQ. The result should maintain the current state (Min or Max) of the
+     * entries into a single APQ. The result should maintain the current state (Min
+     * or Max) of the
      * primary APQ.
+     * 
      * @param otherAPQ the other APQ to merge
      */
     public void merge(AdvancedPriorityQueue otherAPQ) {
@@ -182,6 +201,7 @@ public class AdvancedPriorityQueue {
     // --------------------------- Helper methods ---------------------------
     /**
      * Helper method to get the parent index
+     * 
      * @param i the index of the child
      * @return the index of the parent
      */
@@ -191,6 +211,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Helper method to get the left child index
+     * 
      * @param i the index of the parent
      * @return the index of the left child
      */
@@ -201,6 +222,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Helper method to get the right child index
+     * 
      * @param i the index of the parent
      * @return the index of the right child
      */
@@ -210,7 +232,8 @@ public class AdvancedPriorityQueue {
 
     /**
      * Helper method to bubble down the array
-     * This method is used to maintain the heap property after removing the top element
+     * This method is used to maintain the heap property after removing the top
+     * element
      */
     private void bubbleDown() {
         if (state)
@@ -248,7 +271,8 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to bubble down the array for max heap -> so the largest element is at the top
+     * Helper method to bubble down the array for max heap -> so the largest element
+     * is at the top
      */
     private void bubbleDownMaxHeap() {
         int i = 0;
@@ -266,7 +290,7 @@ public class AdvancedPriorityQueue {
             if (right < size && elements[right] != null && elements[right].getKey() > elements[max].getKey())
                 max = right;
 
-            if (max == i)   // if i is largest, heap property is satisfied
+            if (max == i) // if i is largest, heap property is satisfied
                 break;
             swap(i, max); // swap the current element with the largest child
             i = max;
@@ -275,10 +299,12 @@ public class AdvancedPriorityQueue {
 
     /**
      * Helper method to bubble up the array
-     * This method is used to maintain the heap property after inserting a new element
+     * This method is used to maintain the heap property after inserting a new
+     * element
      */
     public void bubbleUp(int i) {
-        // For min heap: bubble up until parent's key is less than or equal to child's key.
+        // For min heap: bubble up until parent's key is less than or equal to child's
+        // key.
         if (state) {
             while (i > 0) {
                 int parent = getParentIndex(i);
@@ -288,7 +314,8 @@ public class AdvancedPriorityQueue {
                 i = parent;
             }
         }
-        // For max heap: bubble up until parent's key is greater than or equal to child's key.
+        // For max heap: bubble up until parent's key is greater than or equal to
+        // child's key.
         else {
             while (i > 0) {
                 int parent = getParentIndex(i);
@@ -315,6 +342,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Helper method to swap two elements in the array.
+     * 
      * @param i the index of the first entry
      * @param j the index of the second entry
      */
@@ -329,7 +357,7 @@ public class AdvancedPriorityQueue {
      */
     private void doubleSize() {
         Entry[] temp = new Entry[elements.length * 2];
-        for(int i = 0; i < elements.length; i++) {
+        for (int i = 0; i < elements.length; i++) {
             temp[i] = elements[i];
         }
         elements = temp;
@@ -340,11 +368,12 @@ public class AdvancedPriorityQueue {
      */
     private void halfSize() {
         Entry[] temp = new Entry[elements.length / 2];
-        for(int i = 0; i < temp.length; i++) {
+        for (int i = 0; i < temp.length; i++) {
             temp[i] = elements[i];
         }
         elements = temp;
     }
+
     /**
      * Helper method to fix the tree after toggling the state.
      * This method is used to maintain the heap property after toggling the state
@@ -365,6 +394,7 @@ public class AdvancedPriorityQueue {
 
     /**
      * Returns a string representation of the priority queue.
+     * 
      * @return a string representation of the priority queue
      */
     @Override
@@ -379,7 +409,8 @@ public class AdvancedPriorityQueue {
                 if (!first) {
                     sb.append(", ");
                 }
-                sb.append("{key=").append(elements[i].getKey()).append(", value=").append(elements[i].getValue()).append("}");
+                sb.append("{key=").append(elements[i].getKey()).append(", value=").append(elements[i].getValue())
+                        .append("}");
                 first = false;
             }
         }
@@ -388,4 +419,3 @@ public class AdvancedPriorityQueue {
         return sb.toString();
     }
 }
-
