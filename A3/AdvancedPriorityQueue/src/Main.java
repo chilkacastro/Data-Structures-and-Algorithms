@@ -388,5 +388,38 @@ public class Main {
         }
         System.out.println();
         System.out.print("===================================================\n");
+
+        // ----- Test 39: Merge two priority queues -----
+        System.out.println("Test 39: Merging two priority queues");
+        AdvancedPriorityQueue apq1 = new AdvancedPriorityQueue();
+        AdvancedPriorityQueue apq2 = new AdvancedPriorityQueue();
+
+        // Insert elements into first queue
+        apq1.insert(10, "A");
+        apq1.insert(5, "B");
+        apq1.insert(20, "C");
+        apq1.insert(3, "G");
+
+        // Insert elements into second queue
+        apq2.insert(15, "D");
+        apq2.insert(2, "E");
+        apq2.insert(25, "F");
+        apq2.insert(4, "K");
+        apq2.insert(9, "Q");
+
+        System.out.println("Queue 1 before merge: " + apq1);
+        System.out.println("Queue 2 before merge: " + apq2);
+
+        // Merge apq2 into apq1
+        apq1.merge(apq2);
+
+        System.out.println("Queue 1 after merge: " + apq1);
+        System.out.println();
+        System.out.print("===================================================\n");
+
     }
+
+
+
+
 }

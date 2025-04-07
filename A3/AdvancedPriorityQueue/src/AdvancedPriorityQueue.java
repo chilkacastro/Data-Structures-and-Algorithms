@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 /**
@@ -32,14 +31,16 @@ public class AdvancedPriorityQueue {
 
     /**
      * Removes and returns the entry (key-value pair) with the smallest or largest
-     * key, depending on the current mode (Min or Max).
-     * return the entry with the smallest or largest key
+     * key, depending on the current mode (Min or Max)
+     *
+     * @return the removed entry
+     * @throws NoSuchElementException if the queue is empty
      */
     public Entry removeTop() { //
         if (size == 0)
             throw new NoSuchElementException("Priority Queue is empty");
 
-        Entry removedElement = elements[0];
+        Entry removedEntry = elements[0];
         elements[0] = elements[size - 1];
         elements[size - 1] = null;
         size--;
@@ -50,13 +51,16 @@ public class AdvancedPriorityQueue {
         if (size > 0)
             bubbleDown(0);
 
-        return removedElement;
+        return removedEntry;
     }
 
     /**
      * Adds a new entry with key k and value v to the queue,
      * returning the resulting entry object.
-     * return the entry object that was added to the queue
+     *
+     * @param k the key of the entry
+     * @param v the value of the entry
+     * @return the newly created entry
      */
     public Entry insert(int k, String v) {
         if (size == elements.length)
@@ -73,68 +77,20 @@ public class AdvancedPriorityQueue {
     /**
      * Retrieves the entry with the smallest or largest key
      * (depending on the current mode) without removing it.
-     * <p>
-     * return the entry with the smallest or largest key
+     *
+     * @return the entry with the smallest or largest key
      */
     public Entry top() {
         return elements[0];
     }
 
-    //    /**
-//     * Removes a specific entry e from the queue and returns it.
-//     *
-//     * @param e the entry to be removed
-//     * @return the entry that was removed
-//     */
-//    public Entry remove(Entry e) {
-//        if (e == null)
-//            throw new IllegalArgumentException("Entry is null");
-//        if (size == 0)
-//            throw new NoSuchElementException("Priority Queue is empty.");
-//
-//        // Find the index of the entry to be removed.
-//        int indexToRemove = search(e.getKey());
-//        Entry removedElement = elements[indexToRemove];
-//
-//        // Swap the element to be removed with the last element.
-//        swap(indexToRemove, size - 1);
-//        elements[size - 1] = null; // Clear the last element.
-//        size--;
-//
-//        // If there are still elements and the removal did not happen at the very end
-//        if (size > 0 && indexToRemove < size) {
-//            if (indexToRemove > 0) { // if the element is not at the root, compare it with its parent.
-//                int parentIndex = getParentIndex(indexToRemove);
-//                // For a min-heap, if the moved element is smaller than its parent, it should
-//                // bubble up.
-//                if (state) { // min-heap
-//                    if (elements[indexToRemove].getKey() < elements[parentIndex].getKey()) {
-//                        bubbleUp(indexToRemove);
-//                    } else {
-//                        bubbleDown(indexToRemove);
-//                    }
-//                }
-//                // For a max-heap, if it is larger than its parent, it should bubble up.
-//
-//                else { // max-heap
-//                    if (elements[indexToRemove].getKey() > elements[parentIndex].getKey()) {
-//                        bubbleUp(indexToRemove);
-//                    } else {
-//                        bubbleDown(indexToRemove);
-//                    }
-//                }
-//            } else {
-//                bubbleDown(0); // if the element is now at the root (index 0), only bubble down is needed
-//            }
-//        }
-//
-//        // Optionally shrink the underlying array if usage is low.
-//        if (size > DEFAULT_CAPACITY && size < elements.length / 4) {
-//            halfSize();
-//        }
-//
-//        return removedElement;
-//    }
+    /**
+     * Removes a specific entry e from the queue and returns it.
+     * @param e the entry to be removed
+     * @return the removed entry
+     * @throws IllegalArgumentException if e is null or not found in the queue
+     * @throws NoSuchElementException if the queue is empty
+     */
     public Entry remove(Entry e) {
         if (e == null)
             throw new IllegalArgumentException("Entry is null");
@@ -226,50 +182,6 @@ public class AdvancedPriorityQueue {
         }
         return oldKey;
     }
-//    /**
-//     * Updates the key of entry e to k and returns the old key.
-//     *
-//     * @param e      the entry to be updated
-//     * @param newKey the new key
-//     * @return the old key
-//     */
-//    public int replaceKey(Entry e, int newKey) {
-//        int index = search(e.getKey());
-//        int oldKey = elements[index].getKey();
-//        elements[index].setKey(newKey);
-//
-//        if (state) { // for min-heap
-//            if (newKey < oldKey) {
-//                bubbleUp(index); // if the new key is smaller, bubble up
-//            }
-//            if (newKey > oldKey) {
-//                bubbleDown(index); // if the new key is larger, bubble down
-//            }
-//        } else { // for max-heap
-//            if (newKey > oldKey) {
-//                bubbleUp(index); // if the new key is larger, bubble up
-//            }
-//            if (newKey < oldKey) {
-//                bubbleDown(index); // if the new key is smaller, bubble down
-//            }
-//        }
-//
-//        return oldKey;
-//    }
-
-//    /**
-//     * Updates the value of entry e to v and returns the old value.
-//     *
-//     * @param e     the entry to be updated
-//     * @param value the new value to update
-//     * @return the old value of the entry
-//     */
-//    public String replaceValue(Entry e, String value) {
-//        int index = search(e.getKey());
-//        String oldValue = elements[index].getValue();
-//        elements[index].setValue(value);
-//        return oldValue;
-//    }
 
     /**
      * Updates the value of the entry that equals e to newValue and returns the old value.
@@ -296,7 +208,7 @@ public class AdvancedPriorityQueue {
 
         String oldValue = elements[index].getValue();
         elements[index].setValue(newValue);
-        // No reheapification is needed because the key remains unchanged.
+
         return oldValue;
     }
 
@@ -328,26 +240,50 @@ public class AdvancedPriorityQueue {
     }
 
     /**
+     * Returns the nth element (order statistic) in the queue according to the current ordering.
+     * Uses a worst-case O(n) median-of-medians quickselect algorithm.
+     */
+    public Entry peekAt(int n) {
+        if (n < 0 || n >= size)
+            throw new IndexOutOfBoundsException("Index out of bounds for peekAt: " + n + ", size: " + size);
+
+        Entry[] tempElements = new Entry[size];
+        for (int i = 0; i < size; i++) {
+            tempElements[i] = elements[i];
+        }
+
+        return quickSelect(tempElements, 0, size - 1, n);
+    }
+
+    /**
      * Merges the current priority queue with another APQ, combining all
-     * entries into a single APQ. The result should maintain the current state (Min
-     * or Max) of the
-     * primary APQ.
+     * entries into a single APQ. The result maintains the current state (Min or Max)
+     * of the primary APQ.
      *
      * @param otherAPQ the other APQ to merge
      */
     public void merge(AdvancedPriorityQueue otherAPQ) {
         int newSize = this.size + otherAPQ.size;
 
-        if (newSize > elements.length)
-            elements = Arrays.copyOf(elements, newSize);
+        // If the new size exceeds the current array's capacity, create a new array and copy elements manually.
+        if (newSize > elements.length) {
+            Entry[] newElements = new Entry[newSize];
+            // Copy existing elements
+            for (int i = 0; i < this.size; i++) {
+                newElements[i] = this.elements[i];
+            }
+            this.elements = newElements;
+        }
 
-        System.arraycopy(otherAPQ.elements, 0, elements, this.size, otherAPQ.size);
+        // Copy elements from the otherAPQ manually.
+        for (int i = 0; i < otherAPQ.size; i++) {
+            this.elements[this.size + i] = otherAPQ.elements[i];
+        }
 
+        // Update size and rebuild the heap.
         this.size = newSize;
-
         buildHeap();
     }
-
 
     /**
      * Helper method to get the parent zindex
@@ -384,6 +320,7 @@ public class AdvancedPriorityQueue {
      * Helper method to bubble down the array
      * This method is used to maintain the heap property after removing the top
      * element
+     * @param index the index of the element to bubble down
      */
     private void bubbleDown(int index) {
         while (true) {
@@ -538,34 +475,13 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Returns the elements in the priority queue.
+     * Quickselect method to find the nth smallest/largest element in the array.
+     * @param arr the array to search
+     * @param left the left index of the subarray
+     * @param right the right index of the subarray
+     * @param n the index of the element to find
+     * @return the nth smallest/largest element
      *
-     * @return the elements in the priority queue
-     */
-    public Entry[] getElements() {
-        return elements;
-    }
-
-    /**
-     * Returns the nth element (order statistic) in the queue according to the current ordering.
-     * Uses a worst-case O(n) median-of-medians quickselect algorithm.
-     */
-    public Entry peekAt(int n) {
-        if (n < 0 || n >= size)
-            throw new IndexOutOfBoundsException("Index out of bounds for peekAt: " + n + ", size: " + size);
-
-        // Manually copy the active part of the elements array.
-        Entry[] tempElements = new Entry[size];
-        for (int i = 0; i < size; i++) {
-            tempElements[i] = elements[i];
-        }
-
-        return quickSelect(tempElements, 0, size - 1, n);
-    }
-
-    /**
-     * Quickselect routine: returns the element at index n (in the sorted order)
-     * from the subarray arr[left..right].
      */
     private Entry quickSelect(Entry[] arr, int left, int right, int n) {
         int index = quickSelectIndex(arr, left, right, n);
@@ -573,7 +489,12 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Quickselect helper: returns the index of the nth element in arr (within [left, right]).
+     * Performs the quickselect algorithm to find the nth smallest/largest element.
+     * @param arr the array to search
+     * @param left the left index of the subarray
+     * @param right the right index of the subarray
+     * @param indexToFind the index of the element to find
+     * @return the index of the found element
      */
     private int quickSelectIndex(Entry[] arr, int left, int right, int indexToFind) {
         if (left == right)
@@ -590,11 +511,15 @@ public class AdvancedPriorityQueue {
             else
                 left = pivotIndex + 1;
         }
-        return -1; // This should not happen if the input is valid.
+        return -1; // this happens only if the input is invalid
     }
 
     /**
      * Chooses a pivot index using the median-of-medians algorithm.
+     * @param arr the array to find the pivot in
+     * @param left the left index of the subarray
+     * @param right the right index of the subarray
+     * @return the index of the pivot element
      */
     private int medianOfMedians(Entry[] arr, int left, int right) {
         int n = right - left + 1;
@@ -613,8 +538,11 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * partition5: sorts the subarray arr[left..right] using insertion sort and
-     * returns the index of its median element.
+     * Finds the median index of the subarray arr[left..right]
+     * @param arr the array to find the median in
+     * @param left the left index of the subarray
+     * @param right the right index of the subarray
+     * @return the index of the median element
      */
     private int findMedianIndex(Entry[] arr, int left, int right) {
         for (int i = left + 1; i <= right; i++) {
@@ -633,6 +561,13 @@ public class AdvancedPriorityQueue {
      * Partitions the subarray arr[left..right] around the element at pivotIndex.
      * Elements less than the pivot (or greater, in max-heap mode) are moved left.
      * Returns the final index of the pivot element.
+     *
+     * @param arr the array to partition
+     * @param left the left index of the subarray
+     * @param right the right index of the subarray
+     * @param pivotIndex the index of the pivot element
+     * @return the final index of the pivot element
+     *
      */
     private int partition(Entry[] arr, int left, int right, int pivotIndex) {
         Entry pivot = arr[pivotIndex];
