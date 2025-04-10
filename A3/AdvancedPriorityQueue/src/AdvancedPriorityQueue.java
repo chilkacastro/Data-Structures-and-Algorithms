@@ -7,15 +7,15 @@ import java.util.NoSuchElementException;
  */
 public class AdvancedPriorityQueue {
     private boolean state;
-    private Entry[] elements; // array of Entry objects
-    private int size; // how many elements are in the array Entry
+    private Entry[] elements; // Array of Entry objects
+    private int size;         // Number of elements in the APQ
     private static final int DEFAULT_CAPACITY = 10;
 
     /**
      * Constructor for AdvancedPriorityQueue
      */
     public AdvancedPriorityQueue() {
-        this.state = true; // starts in min heap mode
+        this.state = true; // Starts in min heap mode which is true and max heap mode is false
         this.elements = new Entry[DEFAULT_CAPACITY];
         this.size = 0;
     }
@@ -97,10 +97,9 @@ public class AdvancedPriorityQueue {
         if (size == 0)
             throw new NoSuchElementException("Priority Queue is empty.");
 
-        // Find the first element that equals the given entry.
         int indexToRemove = -1;
         for (int i = 0; i < size; i++) {
-            if (e.equals(elements[i])) { // Uses your Entry.equals() method
+            if (e.equals(elements[i])) {        // Uses Entry.equals() method
                 indexToRemove = i;
                 break;
             }
@@ -108,7 +107,7 @@ public class AdvancedPriorityQueue {
         if (indexToRemove == -1)
             throw new IllegalArgumentException("Entry not found in the priority queue.");
 
-        // Remove the element at indexToRemove.
+        // Remove the element at indexToRemove
         Entry removedElement = elements[indexToRemove];
         swap(indexToRemove, size - 1);
         elements[size - 1] = null;
@@ -118,12 +117,12 @@ public class AdvancedPriorityQueue {
         if (size > 0 && indexToRemove < size) {
             if (indexToRemove > 0) {
                 int parentIndex = getParentIndex(indexToRemove);
-                if (state) { // min-heap
+                if (state) {                // Min-heap
                     if (elements[indexToRemove].getKey() < elements[parentIndex].getKey())
                         bubbleUp(indexToRemove);
                     else
                         bubbleDown(indexToRemove);
-                } else { // max-heap
+                } else {                    // Max-heap
                     if (elements[indexToRemove].getKey() > elements[parentIndex].getKey())
                         bubbleUp(indexToRemove);
                     else
@@ -134,7 +133,6 @@ public class AdvancedPriorityQueue {
             }
         }
 
-        // Optionally shrink the array if needed.
         if (size > DEFAULT_CAPACITY && size < elements.length / 4)
             halfSize();
 
@@ -167,14 +165,12 @@ public class AdvancedPriorityQueue {
         int oldKey = elements[index].getKey();
         elements[index].setKey(newKey);
 
-        // For a min-heap: if new key is smaller, bubble up; if larger, bubble down.
-        // For a max-heap: if new key is larger, bubble up; if smaller, bubble down.
-        if (state) { // min-heap
+        if (state) {            // Min-heap - if new key is smaller, bubble up; if larger, bubble down
             if (newKey < oldKey)
                 bubbleUp(index);
             else if (newKey > oldKey)
                 bubbleDown(index);
-        } else { // max-heap
+        } else {                // Max-heap - if new key is larger, bubble up; if smaller, bubble down.
             if (newKey > oldKey)
                 bubbleUp(index);
             else if (newKey < oldKey)
@@ -240,8 +236,11 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Returns the nth element (order statistic) in the queue according to the current ordering.
-     * Uses a worst-case O(n) median-of-medians quickselect algorithm.
+     * Returns the n-th entry in the priority queue (e.g., the n-th smallest key in a min-heap or the n-th largest key
+     * in a max-heap) without removing it.
+     * @param n the index of the element to find
+     * @return the nth element/Entry in the queue
+     * @throws IndexOutOfBoundsException if n is out of bounds
      */
     public Entry peekAt(int n) {
         if (n < 0 || n >= size)
@@ -268,14 +267,12 @@ public class AdvancedPriorityQueue {
         // If the new size exceeds the current array's capacity, create a new array and copy elements manually.
         if (newSize > elements.length) {
             Entry[] newElements = new Entry[newSize];
-            // Copy existing elements
-            for (int i = 0; i < this.size; i++) {
+            for (int i = 0; i < this.size; i++) {  // Copy elements from the current APQ
                 newElements[i] = this.elements[i];
             }
             this.elements = newElements;
         }
 
-        // Copy elements from the otherAPQ manually.
         for (int i = 0; i < otherAPQ.size; i++) {
             this.elements[this.size + i] = otherAPQ.elements[i];
         }
@@ -285,8 +282,10 @@ public class AdvancedPriorityQueue {
         buildHeap();
     }
 
+    // === Helper methods ===
+
     /**
-     * Helper method to get the parent zindex
+     * Gets the parent index of a child node
      *
      * @param i the index of the child
      * @return the index of the parent
@@ -296,7 +295,7 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to get the left child index
+     * Gets the left child index of a parent node
      *
      * @param i the index of the parent
      * @return the index of the left child
@@ -307,7 +306,7 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to get the right child index
+     * Gets the right child index of a parent node
      *
      * @param i the index of the parent
      * @return the index of the right child
@@ -317,77 +316,65 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to bubble down the array
-     * This method is used to maintain the heap property after removing the top
-     * element
+     * Bubbles down the array to maintain the heap property after removal.
      * @param index the index of the element to bubble down
      */
     private void bubbleDown(int index) {
         while (true) {
             int left = getLeftChildIndex(index);
             int right = getRightChildIndex(index);
-            int target = index; // This will be the index to potentially swap with
+            int target = index; // index to potentially swap with
 
             if (state) { // Min-Heap
+                // If the left child is smaller than the current element, swap
                 if (left < size && elements[left].getKey() < elements[target].getKey()) {
                     target = left;
                 }
+                // If the right child is smaller than the current element, swap
                 if (right < size && elements[right].getKey() < elements[target].getKey()) {
                     target = right;
                 }
             } else { // Max-Heap
+                // If the left child is larger than the current element, swap
                 if (left < size && elements[left].getKey() > elements[target].getKey()) {
                     target = left;
                 }
+                // If the right child is larger than the current element, swap
                 if (right < size && elements[right].getKey() > elements[target].getKey()) {
                     target = right;
                 }
             }
 
             if (target == index) {
-                break; // if no child is better, stop the loop
+                break;           // If no child is better, stop the loop
             }
 
-            swap(index, target); // swap with the better child
-            index = target; // move to the child position and continue
+            swap(index, target); // Swap with the better child
+            index = target;      // Move to the child position and continue
         }
     }
 
     /**
-     * Helper method to bubble up the array
+     * Bubbles up the array to maintain the heap property after inserting a new element
      *
      * @param index the index of the element to bubble up
      */
     private void bubbleUp(int index) {
         while (index > 0) {
             int parentIndex = getParentIndex(index);
+            // Compare the current element with its parent - if the current element is smaller (or larger) then swap
             if ((state && elements[index].getKey() < elements[parentIndex].getKey()) ||
                     (!state && elements[index].getKey() > elements[parentIndex].getKey())) {
                 swap(index, parentIndex);
                 index = parentIndex;
             } else {
-                break;
+                break;  // If the parent is smaller (or larger), stop the loop
             }
         }
     }
 
     /**
-     * Helper method for searching a key in the array.
-     *
-     * @param key the key to search for
-     * @throws IllegalArgumentException if the key is not found
-     */
-    private int search(int key) {
-        for (int index = 0; index < size; index++) {
-            if (elements[index].getKey() == key) {
-                return index;
-            }
-        }
-        throw new IllegalArgumentException("Key " + key + " not found in the priority queue.");
-    }
-
-    /**
-     * Helper method to swap two elements in the elements array.
+     * Swaps two elements in the elements array.
      * This is used by bubbleDown and bubbleUp methods
      *
      * @param i the index of the first entry
@@ -400,7 +387,7 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to double the size of the array.
+     * Doubles the size of the array.
      */
     private void doubleSize() {
         Entry[] temp = new Entry[elements.length * 2];
@@ -411,7 +398,7 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to half the size of the array.
+     * Halves the size of the array.
      */
     private void halfSize() {
         Entry[] temp = new Entry[elements.length / 2];
@@ -422,8 +409,7 @@ public class AdvancedPriorityQueue {
     }
 
     /**
-     * Helper method to fix the tree after toggling the state.
-     * This method is used to maintain the heap property after toggling the state
+     * Fixes the tree after toggling the state.
      */
     private void buildHeap() {
         for (int i = getParentIndex(size - 1); i >= 0; i--) {
@@ -481,7 +467,6 @@ public class AdvancedPriorityQueue {
      * @param right the right index of the subarray
      * @param n the index of the element to find
      * @return the nth smallest/largest element
-     *
      */
     private Entry quickSelect(Entry[] arr, int left, int right, int n) {
         int index = quickSelectIndex(arr, left, right, n);
@@ -497,12 +482,12 @@ public class AdvancedPriorityQueue {
      * @return the index of the found element
      */
     private int quickSelectIndex(Entry[] arr, int left, int right, int indexToFind) {
-        if (left == right)
+        if (left == right)                                       // If the list contains only one element
             return left;
 
         while (left <= right) {
-            int pivotIndex = medianOfMedians(arr, left, right);
-            pivotIndex = partition(arr, left, right, pivotIndex);
+            int pivotIndex = medianOfMedians(arr, left, right);   // Choose a pivot index using the median-of-medians algorithm
+            pivotIndex = partition(arr, left, right, pivotIndex); // Partition the array around the pivot
 
             if (pivotIndex == indexToFind)
                 return pivotIndex;
@@ -511,7 +496,7 @@ public class AdvancedPriorityQueue {
             else
                 left = pivotIndex + 1;
         }
-        return -1; // this happens only if the input is invalid
+        return -1;                                                 // If the input is invalid
     }
 
     /**
@@ -526,14 +511,15 @@ public class AdvancedPriorityQueue {
         if (n <= 5)
             return findMedianIndex(arr, left, right);
 
-        int numMedians = (n + 4) / 5; // number of groups of 5
-        for (int i = 0; i < numMedians; i++) {
-            int subLeft = left + i * 5;
-            int subRight = Math.min(subLeft + 4, right);
-            int medianIndex = findMedianIndex(arr, subLeft, subRight);
+        // Divide arr into groups of 5 and find the median of each group
+        int numMedians = (n + 4) / 5;                                   // Number of groups
+        for (int i = 0; i < numMedians; i++) {                          // Iterate through each group
+            int subLeft = left + i * 5;                                 // Start of the subarray
+            int subRight = Math.min(subLeft + 4, right);                // End of the subarray
+            int medianIndex = findMedianIndex(arr, subLeft, subRight);  // Find the median of the subarray
             swap(arr, left + i, medianIndex);
         }
-        int mid = left + (numMedians - 1) / 2;
+        int mid = left + (numMedians - 1) / 2;                          // Find the median of the medians
         return quickSelectIndex(arr, left, left + numMedians - 1, mid);
     }
 
@@ -545,9 +531,9 @@ public class AdvancedPriorityQueue {
      * @return the index of the median element
      */
     private int findMedianIndex(Entry[] arr, int left, int right) {
+       // Use insertion sort to find the median of the subarray
         for (int i = left + 1; i <= right; i++) {
             int j = i;
-            // Use the current ordering: if state is true, lower keys come first (min-heap)
             while (j > left && (state ? arr[j].getKey() < arr[j - 1].getKey()
                     : arr[j].getKey() > arr[j - 1].getKey())) {
                 swap(arr, j, j - 1);
@@ -571,20 +557,22 @@ public class AdvancedPriorityQueue {
      */
     private int partition(Entry[] arr, int left, int right, int pivotIndex) {
         Entry pivot = arr[pivotIndex];
-        swap(arr, pivotIndex, right);  // Move pivot to end.
+        swap(arr, pivotIndex, right);
         int storeIndex = left;
         for (int i = left; i < right; i++) {
+            // Compare the current element with the pivot - if the current element is smaller (or larger) than the pivot, swap
             if (state ? arr[i].getKey() < pivot.getKey() : arr[i].getKey() > pivot.getKey()) {
                 swap(arr, storeIndex, i);
                 storeIndex++;
             }
         }
-        swap(arr, storeIndex, right);  // Move pivot to its final place.
+        swap(arr, storeIndex, right);
         return storeIndex;
     }
 
     /**
      * Swaps two elements in the given array.
+     * This is used by the partition method.
      */
     private void swap(Entry[] arr, int i, int j) {
         Entry temp = arr[i];

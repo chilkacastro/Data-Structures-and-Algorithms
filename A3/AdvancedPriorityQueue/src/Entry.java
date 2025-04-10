@@ -19,6 +19,45 @@ public class Entry {
     }
 
     /**
+     * Compare two Entry objects
+     *
+     * @param obj the object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Entry other = (Entry) obj;
+        return key == other.key &&
+                (value == null ? other.value == null : value.equals(other.value));
+    }
+
+    /**
+     * Hash code for Entry
+     *
+     * @return hash code for Entry
+     */
+    @Override
+    public int hashCode() {
+        int result = Integer.hashCode(key);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        return result;
+    }
+
+    /**
+     * String representation of Entry
+     *
+     * @return string representation of Entry
+     */
+    @Override
+    public String toString() {
+        return "{key=" + key + ", value=" + value + "}";
+    }
+
+    /**
      * Get the value of Entry
      * @return
      */
@@ -50,44 +89,4 @@ public class Entry {
         this.key = key;
     }
 
-    /**
-     * Compare two Entry objects
-     *
-     * @param obj the object to compare with
-     * @return true if the objects are equal, false otherwise
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Entry other = (Entry) obj;
-        return key == other.key &&
-                (value == null ? other.value == null : value.equals(other.value));
-    }
-
-    /**
-     * Hash code for Entry
-     *
-     * @return hash code for Entry
-     */
-    @Override
-    public int hashCode() {
-        // Use the key and value to generate a hash code
-        int result = Integer.hashCode(key);
-        // Use a prime number to reduce collisions
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
-    }
-
-    /**
-     * String representation of Entry
-     *
-     * @return string representation of Entry
-     */
-    @Override
-    public String toString() {
-        return "{key=" + key + ", value=" + value + "}";
-    }
 }
